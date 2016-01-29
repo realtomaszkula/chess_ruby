@@ -29,8 +29,8 @@ class Pawn < Piece
     @moved = false
     @promote_position = promote_position
     @unicode = case @color
-              when :white then "\u2659".encode('utf-8')
-              when :black then "\u265F".encode('utf-8')
+              when :white then "\u2659"
+              when :black then "\u265F"
               end
 
   end
@@ -94,8 +94,8 @@ class Knight < Piece
     super(color, position)
     @figure = :knight
     @unicode =  case @color
-                when :white then "\u2658".encode('utf-8')
-                when :black then "\u265E".encode('utf-8')
+                when :white then "\u2658"
+                when :black then "\u265E"
                 end
   end
 
@@ -111,8 +111,8 @@ class Bishop < Piece
     super(color, position)
     @figure = :bishop
     @unicode =  case @color
-                when :white then "\u2657".encode('utf-8')
-                when :black then "\u265D".encode('utf-8')
+                when :white then "\u2657"
+                when :black then "\u265D"
                 end
   end
 end
@@ -125,8 +125,8 @@ class Queen < Piece
     super(color, position)
     @figure = :queen
     @unicode =  case @color
-                when :white then "\u2655".encode('utf-8')
-                when :black then "\u265B".encode('utf-8')
+                when :white then "\u2655"
+                when :black then "\u265B"
                 end
   end
 end
@@ -140,8 +140,8 @@ class King < Piece
     @figure = :king
     @castling = true
     @unicode =  case @color
-                when :white then "\u2654".encode('utf-8')
-                when :black then "\u265A".encode('utf-8')
+                when :white then "\u2654"
+                when :black then "\u265A"
                 end
   end
 end
@@ -155,8 +155,8 @@ class Rook < Piece
     @figure = :rook
     @castling = true
     @unicode =  case @color
-                when :white then "\u2656".encode('utf-8')
-                when :black then "\u265C".encode('utf-8')
+                when :white then "\u2656"
+                when :black then "\u265C"
                 end
   end
 end

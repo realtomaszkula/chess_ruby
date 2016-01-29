@@ -31,7 +31,7 @@ class Chess
     puts "Incorrect, try again"; player_move if @selected_figure == nil
 
     @selected_to_go_position = split_and_convert(input[1])
-    @selected_figure.find_possible_moves
+    @selected_figure.find_possible_moves(@plr1, @plr2)
 
     puts "Incorrect, try again"; player_move unless @selected_figure.possible_moves.include?(@selected_to_go_position)
 

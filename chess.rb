@@ -1,17 +1,31 @@
 require_relative './pieces.rb'
 require_relative './player.rb'
+require_relative './board.rb'
 
 class Chess
-  attr_reader :plr1, :plr2
+  attr_reader :plr1, :plr2, :board
   def initialize
-    get_players
+    make_players
+    make_board
   end
 
-  def get_players
+  def play
+    @board.draw
+  end
+
+  private
+
+  def make_players
     @plr1 = Player.new('Tomasz', :white)
     @plr2 = Player.new('Piotr', :black)
   end
 
+  def make_board
+    @board = Board.new
+  end
+
 end
+
+
 
 

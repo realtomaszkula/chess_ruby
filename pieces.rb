@@ -59,11 +59,11 @@ class Pawn < Piece
 
     case @color
     when :white
-      @possible_moves << [x+1, y+1] if @plr2.pieces.any? { |piece| piece.position == [x+1, y+1] }
-      @possible_moves << [x+1, y-1] if @plr2.pieces.any? { |piece| piece.position == [x+1, y-1] }
+      @possible_moves << [x+1, y+1] if plr2.pieces.any? { |piece| piece.position == [x+1, y+1] }
+      @possible_moves << [x+1, y-1] if plr2.pieces.any? { |piece| piece.position == [x+1, y-1] }
     when :black
-      @possible_moves << [x-1, y+1] if @plr1.pieces.any? { |piece| piece.position == [x-1, y+1] }
-      @possible_moves << [x-1, y-1] if @plr1.pieces.any? { |piece| piece.position == [x-1, y-1] }
+      @possible_moves << [x-1, y+1] if plr1.pieces.any? { |piece| piece.position == [x-1, y+1] }
+      @possible_moves << [x-1, y-1] if plr1.pieces.any? { |piece| piece.position == [x-1, y-1] }
     end
   end
 

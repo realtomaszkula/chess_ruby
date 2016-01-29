@@ -12,7 +12,6 @@ class Chess
   end
 
   def play
-
     player_move
     collect_all_pieces
     create_clear_board
@@ -21,7 +20,7 @@ class Chess
 
   def player_move
     ## mockup for rspec
-    input = "11 21"
+    input = "11 12"
     input = input.split
 
     # input = input_move()  ##real input
@@ -33,9 +32,17 @@ class Chess
     @selected_to_go_position = split_and_convert(input[1])
     @selected_figure.find_possible_moves(@plr1, @plr2)
 
+    p @selected_figure.possible_moves
+
     puts "Incorrect, try again"; player_move unless @selected_figure.possible_moves.include?(@selected_to_go_position)
 
     @selected_figure.position = @selected_to_go_position
+
+
+    collect_all_pieces
+    create_clear_board
+    update_board
+
   end
 
   def input_move

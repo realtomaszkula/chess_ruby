@@ -1,4 +1,5 @@
-
+# require_relative './pieces.rb'
+# require_relative './chess.rb'
 
 class Piece
   attr_reader :color, :figure
@@ -35,6 +36,8 @@ class Pawn < Piece
     pawn_promotion if @promote_position.include?(@position)
   end
 
+  private
+
   def promote_position
     x = @position[0]
 
@@ -53,12 +56,24 @@ class Pawn < Piece
 
   def pawn_promotion
     puts "Time to promote! [QUEEN, KNIGHT, ROOK, BISHOP]"
-    case input = gets.chomp.upcase
-    when 'QUEEN'  then Queen.new(@color, @position)
-    when 'KNIGHT' then Knight.new(@color, @position)
-    when 'ROOK'   then Rook.new(@color, @position)
-    when 'BISHOP' then Bishop.new(@color, @position)
-    else puts 'Incorrect, try again'; pawn_promotion
+
+    case @color
+    when :black
+      case input = gets.chomp.upcase
+      when 'QUEEN'  then @plr1.pieces << Queen.new(@color, @position)
+      when 'KNIGHT' then @plr1.pieces << Knight.new(@color, @position)
+      when 'ROOK'   then @plr1.pieces << Rook.new(@color, @position)
+      when 'BISHOP' then @plr1.pieces << Bishop.new(@color, @position)
+      else puts 'Incorrect, try again'; pawn_promotion
+      end
+    when :white
+      case input = gets.chomp.upcase
+      when 'QUEEN'  then @plr2.pieces << Queen.new(@color, @position)
+      when 'KNIGHT' then @plr2.pieces << Knight.new(@color, @position)
+      when 'ROOK'   then @plr2.pieces << Rook.new(@color, @position)
+      when 'BISHOP' then @plr2.pieces << Bishop.new(@color, @position)
+      else puts 'Incorrect, try again'; pawn_promotion
+      end
     end
   end
 

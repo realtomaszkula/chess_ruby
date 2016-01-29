@@ -1,4 +1,5 @@
-require_relative './pieces.rb'
+# require_relative './pieces.rb'
+# require_relative './chess.rb'
 
 class Player
   attr_reader :name, :color
@@ -6,6 +7,12 @@ class Player
   def initialize(name, color)
     @name = name
     @color = color
+    @pieces = []
+    get_pieces
+  end
+
+  def show
+    @pieces.each {|piece| puts piece.inspect }
   end
 
   def get_pieces
@@ -37,3 +44,4 @@ class Player
       end
     end
 end
+

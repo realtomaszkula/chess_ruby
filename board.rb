@@ -1,6 +1,7 @@
 class Board
+  attr_accessor :value
   def initialize
-    @board = [
+    @value = [
           Array.new(8, " "),
           Array.new(8, " "),
           Array.new(8, " "),
@@ -13,7 +14,7 @@ class Board
   end
 
   def draw
-    @board.reverse.each_with_index do |row, i|
+    @value.reverse.each_with_index do |row, i|
       print "\t\t\t\t #{(i-8).abs}"
       row.each { |x| print "|#{x}" }
       print "|\n"
@@ -26,7 +27,7 @@ class Board
     all_pieces.each do |piece|
       x = piece.position[0]
       y = piece.position[1]
-      @board[x][y] = "#{piece.unicode}"
+      @value[x][y] = "#{piece.unicode}"
     end
   end
 

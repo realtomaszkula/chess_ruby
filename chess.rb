@@ -13,10 +13,23 @@ class Chess
   end
 
   def play
-    draw_board
+
   end
 
+  def player_move
+    puts "Enter your move [ to move from A1 to A2 type: A1 A2 ]"
+    input = "70 34"
+    input = input.split
 
+    from = input[0].split("").collect!(&:to_i)
+    to = input[1].split("").collect!(&:to_i)
+
+    @selected_from = @board.value[from[0]][from[1]]
+    @selected_to = @board.value[to[0]][to[1]]
+
+    puts "from: #{@selected_from}, to: #{@selected_to}"
+
+  end
 
   def make_players
     @plr1 = Player.new('Tomasz', :white)

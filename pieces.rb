@@ -1,7 +1,8 @@
+
+
 class Piece
   attr_reader :color, :figure
   attr_accessor :position
-
 
   def initialize(color, position)
     @color = color
@@ -12,7 +13,6 @@ class Piece
     @position = possibe_moves.first
     p @position
   end
-
 
 end
 
@@ -65,9 +65,6 @@ class Pawn < Piece
   def en_passant
   end
 end
-
-
-
 
 class Knight < Piece
   attr_reader :color, :figure
@@ -123,8 +120,6 @@ class Rook < Piece
     @castling = true
   end
 end
-
-
 
 
 

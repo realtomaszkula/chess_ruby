@@ -2,7 +2,7 @@
 # require_relative './chess.rb'
 
 class Piece
-  attr_reader :color, :figure
+  attr_reader :color, :figure, :unicode
   attr_accessor :position
 
   def initialize(color, position)
@@ -28,6 +28,11 @@ class Pawn < Piece
     @figure = :pawn
     @moved = false
     @promote_position = promote_position
+    @unicode = case @color
+              when :white then "\u2659".encode('utf-8')
+              when :black then "\u265F".encode('utf-8')
+              end
+
   end
 
   def move
@@ -88,6 +93,10 @@ class Knight < Piece
   def initialize(color, position)
     super(color, position)
     @figure = :knight
+    @unicode =  case @color
+                when :white then "\u2658".encode('utf-8')
+                when :black then "\u265E".encode('utf-8')
+                end
   end
 
   def movement_pattern
@@ -101,6 +110,10 @@ class Bishop < Piece
   def initialize(color, position)
     super(color, position)
     @figure = :bishop
+    @unicode =  case @color
+                when :white then "\u2657".encode('utf-8')
+                when :black then "\u265D".encode('utf-8')
+                end
   end
 end
 
@@ -111,6 +124,10 @@ class Queen < Piece
   def initialize(color, position)
     super(color, position)
     @figure = :queen
+    @unicode =  case @color
+                when :white then "\u2655".encode('utf-8')
+                when :black then "\u265B".encode('utf-8')
+                end
   end
 end
 
@@ -122,6 +139,10 @@ class King < Piece
     super(color, position)
     @figure = :king
     @castling = true
+    @unicode =  case @color
+                when :white then "\u2654".encode('utf-8')
+                when :black then "\u265A".encode('utf-8')
+                end
   end
 end
 
@@ -133,6 +154,10 @@ class Rook < Piece
     super(color, position)
     @figure = :rook
     @castling = true
+    @unicode =  case @color
+                when :white then "\u2656".encode('utf-8')
+                when :black then "\u265C".encode('utf-8')
+                end
   end
 end
 

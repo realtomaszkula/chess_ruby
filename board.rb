@@ -22,4 +22,13 @@ class Board
     print "\t\t\t\t   #{letters}\n"
   end
 
+  def update(all_pieces)
+    all_pieces.each do |piece|
+      x = piece.position[0]
+      y = piece.position[1]
+      @board[x][y] = "#{piece.unicode}"
+    end
+  end
+
 end
+

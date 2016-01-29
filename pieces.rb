@@ -55,13 +55,17 @@ class Pawn < Piece
 
   def find_possible_moves(plr1, plr2)
     x, y = @position[0], @position[1]
-    @possible_moves = @moved ? [[x+1, y]] : [[x+1, y], [x+2, y]]
+    @possible_moves = []
 
     case @color
     when :white
+      @possible_moves << [x+1, y]
+      @possible_moves << [x+2, y]   unless @moved
       @possible_moves << [x+1, y+1] if plr2.pieces.any? { |piece| piece.position == [x+1, y+1] }
       @possible_moves << [x+1, y-1] if plr2.pieces.any? { |piece| piece.position == [x+1, y-1] }
     when :black
+      @possible_moves << [x-1, y]
+      @possible_moves << [x-2, y]   unless @moved
       @possible_moves << [x-1, y+1] if plr1.pieces.any? { |piece| piece.position == [x-1, y+1] }
       @possible_moves << [x-1, y-1] if plr1.pieces.any? { |piece| piece.position == [x-1, y-1] }
     end

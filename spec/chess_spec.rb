@@ -42,8 +42,8 @@ describe Chess do
           @killer.find_possible_moves(@plr1, @plr2)
         end
 
-        it 'test' do
-          expect(@killer.possible_moves).to eql [[4,1], [5,1], [5,2]]
+        it 'adds an extra move when possible to kill another piece' do
+          expect(@killer.possible_moves).to match_array([[5,1], [4,2], [5,2]])
         end
       end
 

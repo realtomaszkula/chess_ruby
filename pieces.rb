@@ -80,6 +80,7 @@ class Pawn < Piece
     super(color, position)
     @figure = :pawn
     @moved = false
+    @promote_position = promote_position
   end
 
   def move
@@ -87,9 +88,20 @@ class Pawn < Piece
     super
   end
 
+  def promote_position
+    x = @position[0]
+
+    case @color
+    when :white then return (0..7).collect {|i| [x+6, i]}
+    when :black then return (0..7).collect {|i| [x-6, i]}
+    end
+
+  end
+
   def movement_pattern
     x, y = @position[0], @position[1]
-    [x+1, y]
+    moved ? [x+1, y] : [[x+1, y], [x+2, y]]
+
   end
 
 

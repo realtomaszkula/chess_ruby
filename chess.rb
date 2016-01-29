@@ -17,18 +17,33 @@ class Chess
   end
 
   def player_move
-    puts "Enter your move [ to move from A1 to A2 type: A1 A2 ]"
-    input = "70 34"
-    input = input.split
 
-    from = input[0].split("").collect!(&:to_i)
-    to = input[1].split("").collect!(&:to_i)
+    ## mockup for rspec
+    # input = "70 34"
+    # input = input.split
+
+    input = input_move()
+    from = convert_to_integer(input[0])
+    to = convert_to_integer(input[1])
 
     @selected_from = @board.value[from[0]][from[1]]
     @selected_to = @board.value[to[0]][to[1]]
 
     puts "from: #{@selected_from}, to: #{@selected_to}"
 
+  end
+
+  def input_move
+    puts "Enter your move [ to move from A1 to A2 type: A1 A2 ]"
+    input = gets.chomp.downcase
+    until input.length == "5" && input[2] == " " && input[0].ord.between?(65,72) && input[3].ord.between?(65,72)  && input[1].to_i.between?(1,8)  && input[4].to_i.between?(1,8)
+       "Incorrect, try again"
+    end
+    input = input.split ## ["70" "34"]
+  end
+
+  def convert_to_integer(input)
+    input.split("").collect!(&:to_i)  ## [7,0]
   end
 
   def make_players

@@ -1,32 +1,37 @@
 class Piece
+  attr_reader :color, :figure
+  attr_accessor :position
+
+
   def initialize(color, position)
     @color = color
     @position =  position
   end
 
   def move
+    @position = movement_pattern
   end
-
-  private
-
-
 
 
 end
 
 class Knight < Piece
+  attr_reader :color, :figure
+  attr_accessor :position
+
   def initialize(color, position)
     super(color, position)
     @figure = :knight
   end
 
   def movement_pattern
-
   end
-
 end
 
 class Bishop < Piece
+  attr_reader :color, :figure
+  attr_accessor :position
+
   def initialize(color, position)
     super(color, position)
     @figure = :bishop
@@ -34,6 +39,9 @@ class Bishop < Piece
 end
 
 class Queen < Piece
+  attr_reader :color, :figure
+  attr_accessor :position
+
   def initialize(color, position)
     super(color, position)
     @figure = :queen
@@ -41,6 +49,9 @@ class Queen < Piece
 end
 
 class King < Piece
+  attr_reader :color, :figure
+  attr_accessor :position
+
   def initialize(color, position)
     super(color, position)
     @figure = :king
@@ -49,6 +60,9 @@ class King < Piece
 end
 
 class Rook < Piece
+  attr_reader :color, :figure
+  attr_accessor :position
+
   def initialize(color, position)
     super(color, position)
     @figure = :rook
@@ -57,11 +71,27 @@ class Rook < Piece
 end
 
 class Pawn < Piece
+
+  attr_reader :color, :figure
+  attr_accessor :position
+
+
   def initialize(color, position)
     super(color, position)
-    @figure = true
-    @first_move = true
+    @figure = :pawn
+    @moved = false
   end
+
+  def move
+    @moved = true
+    super
+  end
+
+  def movement_pattern
+    x, y = @position[0], @position[1]
+    [x+1, y]
+  end
+
 
   def pawn_promotion
   end

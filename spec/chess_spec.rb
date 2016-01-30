@@ -7,7 +7,7 @@ describe Chess do
   let(:update) {
                   game.collect_all_pieces
                   game.update_board
-                  game.draw_board
+                  # game.draw_board
                 }
 
     describe Pawn do
@@ -54,5 +54,7 @@ describe Chess do
         end
       end
     end
+
+
 
 end

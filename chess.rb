@@ -1,6 +1,7 @@
 require_relative './pieces.rb'
 require_relative './player.rb'
 require_relative './board.rb'
+require 'yaml'
 
 class Chess
   attr_accessor :plr1, :plr2, :board
@@ -43,14 +44,15 @@ class Chess
   def input_move
     puts "Enter your move [ to move from A1 to A2 type: A1 A2 ]"
     input = gets.chomp.downcase
-    until input.length == "5"          &&
+    until (input.length == "5"          &&
           input[2]     == " "          &&
           input[0].ord.between?(65,72) &&
           input[3].ord.between?(65,72) &&
           input[1].to_i.between?(1,8)  &&
-          input[4].to_i.between?(1,8)
+          input[4].to_i.between?(1,8)) || input = 'SAVE'
        "Incorrect, try again"
-        input = gets.chomp.downcase
+    input == 'SAVE' ? save_the_game; input_move : input = gets.chomp.downcase
+
     end
     input = input.split ## ["70" "34"]
   end
@@ -82,8 +84,7 @@ class Chess
     update_board
   end
 
-
-    def draw_board
+  def draw_board
     @board.draw
   end
 
@@ -94,6 +95,20 @@ class Chess
       @active_player = @plr1; @opposing_player = @plr2
     end
   end
+
+  def save_the_game
+    yaml_string = YAML::dump(self)
+    File.open("./saves/save.txt", "w") do |f|
+      f.puts yaml_string
+    end
+    print "\n\t\t\t*  Game saved!  *\n\t\t\t"
+  end
+
+  def load_the_game
+    yaml_string = File.open("./saves/save.txt","r") {|fname| fname.read}
+    x = YAML::load(yaml_string)
+  end
+
 
 end
 

@@ -9,14 +9,13 @@ class Chess
     create_clear_board
     @active_player = @plr1
     @opposing_player = @plr2
-    collect_all_pieces
+    implement_changes
   end
 
   def play
     player_move
-    collect_all_pieces
-    create_clear_board
-    update_board
+    impement_changes
+    change_turn
   end
 
   def player_move
@@ -37,14 +36,8 @@ class Chess
       puts "Incorrect, try again"; player_move
     else
       @selected_figure.position = @selected_destination
+      @opposing_player.kill_piece(@selected_destination)
     end
-
-
-
-    collect_all_pieces
-    create_clear_board
-    update_board
-
   end
 
   def input_move
@@ -79,12 +72,27 @@ class Chess
     @board = Board.new
   end
 
-  def draw_board
+  def update_board
+    @board.update(@all_pieces)
+  end
+
+  def implement_changes
+    collect_all_pieces
+    create_clear_board
+    update_board
+  end
+
+
+    def draw_board
     @board.draw
   end
 
-  def update_board
-    @board.update(@all_pieces)
+  def change_turn
+    if @active_player = @plr1
+      @active_player = @plr2; @opposing_player = @plr1
+    else
+      @active_player = @plr1; @opposing_player = @plr2
+    end
   end
 
 end

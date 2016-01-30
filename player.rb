@@ -15,6 +15,10 @@ class Player
     @pieces.each {|piece| puts piece.inspect }
   end
 
+  def kill_piece(position)
+    @pieces.select{ |piece| piece = piece unless piece.position == position }.map! { |piece| piece = piece }
+  end
+
   def get_pieces
     case color
       when :white

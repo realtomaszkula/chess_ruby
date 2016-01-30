@@ -7,12 +7,12 @@ describe Chess do
   let(:update) {
                   game.collect_all_pieces
                   game.update_board
-                  #game.draw_board
+                  game.draw_board
                 }
 
     describe Pawn do
 
-      context 'when moving' do
+      xcontext 'when moving' do
         before do
           @pawn = Pawn.new(:white, [1,1])
         end
@@ -25,7 +25,7 @@ describe Chess do
 
       end
 
-      context 'testing if [6,2] can move diagonally to kill [5,1]' do
+      xcontext 'testing if [6,2] can move diagonally to kill [5,1]' do
 
         before do
           plr1.pieces << Pawn.new(:white, [5,1] )
@@ -39,7 +39,7 @@ describe Chess do
         end
       end
 
-      context 'testing if [1,1] can move diagonally to kill [2,2]' do
+      xcontext 'testing if [1,1] can move diagonally to kill [2,2]' do
         before do
           plr2.pieces << Pawn.new(:black, [2,2] )
           update
@@ -50,6 +50,23 @@ describe Chess do
         it 'adds an extra move when possible to kill another piece' do
           expect(@killer.possible_moves).to match_array([[2,2], [3,1], [2,1]])
         end
+      end
+
+
+      describe '#pawn_promotion' do
+        it 'removes pawn, creates queen' do
+            plr1.pieces = []
+            plr2.pieces = []
+            plr1.pieces << Pawn.new(:white, [1,1] )
+            @pawn = plr1.pieces.first
+
+            @pawn.instance_variable_set(:@input, 'QUEEN')
+            @pawn.position = [7,1]
+
+
+          end
+
+
       end
 
     end

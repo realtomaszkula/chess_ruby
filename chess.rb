@@ -49,11 +49,12 @@ class Chess
           input[0].ord.between?(65,72) &&
           input[3].ord.between?(65,72) &&
           input[1].to_i.between?(1,8)  &&
-          input[4].to_i.between?(1,8)) || input = 'SAVE'
+          input[4].to_i.between?(1,8)) || input == 'SAVE'
        "Incorrect, try again"
-    input == 'SAVE' ? save_the_game; input_move : input = gets.chomp.downcase
-
+       input = gets.chomp.downcase
     end
+
+    save_the_game; input_move if input == 'SAVE'
     input = input.split ## ["70" "34"]
   end
 
@@ -108,7 +109,6 @@ class Chess
     yaml_string = File.open("./saves/save.txt","r") {|fname| fname.read}
     x = YAML::load(yaml_string)
   end
-
 
 end
 

@@ -64,12 +64,7 @@ class Pawn < Piece
     end
   end
 
-  ## neet to test this
-
-
   def pawn_promotion
-    puts "Time to promote! [QUEEN, KNIGHT, ROOK, BISHOP]"
-
     case @color
     when :black
       case input = gets.chomp.upcase
@@ -88,7 +83,6 @@ class Pawn < Piece
       else puts 'Incorrect, try again'; pawn_promotion
       end
     end
-    ## need to add deleting the pawn, as is it just adds another figure
   end
 
   def en_passant

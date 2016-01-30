@@ -28,9 +28,9 @@ describe Chess do
       context 'testing if [6,2] can move diagonally to kill [5,1]' do
 
         before do
-          game.plr1.pieces << Pawn.new(:white, [5,1] )
+          plr1.pieces << Pawn.new(:white, [5,1] )
           update
-          @killer = game.plr2.pieces.select { |piece| piece.position == [6,2] }.first
+          @killer = plr2.pieces.select { |piece| piece.position == [6,2] }.first
           @killer.find_possible_moves(plr1, plr2)
         end
 
@@ -41,9 +41,9 @@ describe Chess do
 
       context 'testing if [1,1] can move diagonally to kill [2,2]' do
         before do
-          game.plr2.pieces << Pawn.new(:black, [2,2] )
+          plr2.pieces << Pawn.new(:black, [2,2] )
           update
-          @killer = game.plr1.pieces.select { |piece| piece.position == [1,1] }.first
+          @killer = plr1.pieces.select { |piece| piece.position == [1,1] }.first
           @killer.find_possible_moves(plr1, plr2)
         end
 
@@ -53,10 +53,4 @@ describe Chess do
       end
 
     end
-
-
-
-
-
-
 end

@@ -10,16 +10,11 @@ class Piece
     @position =  position
   end
 
-  def move
-    @position = possible_moves.first
-    p @position
-  end
-
 end
 
 class Pawn < Piece
 
-  attr_reader :color, :figure, :possible_moves
+  attr_reader :color, :figure, :possible_moves, :moved
   attr_accessor :position
 
 
@@ -35,13 +30,11 @@ class Pawn < Piece
 
   end
 
-  def move
-    super
+  def position=(destination)
+    @position = destination
     @moved = true
     pawn_promotion if @promote_position.include?(@position)
   end
-
-
 
   def promote_position
     x = @position[0]

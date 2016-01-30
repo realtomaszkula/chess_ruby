@@ -29,14 +29,14 @@ class Chess
     @selected_figure = @active_player.pieces.select { |piece| piece.position == @selected_position }.first
     puts "Incorrect, try again"; player_move if @selected_figure == nil
 
-    @selected_to_go_position = split_and_convert(input[1])
+    @selected_destination = split_and_convert(input[1])
     @selected_figure.find_possible_moves(@plr1, @plr2)
 
-    p @selected_figure.possible_moves
+    # p @selected_figure.possible_moves
 
-    puts "Incorrect, try again"; player_move unless @selected_figure.possible_moves.include?(@selected_to_go_position)
+    puts "Incorrect, try again"; player_move unless @selected_figure.possible_moves.include?(@selected_destination)
 
-    @selected_figure.position = @selected_to_go_position
+    @selected_figure.position = @selected_destination
 
 
     collect_all_pieces

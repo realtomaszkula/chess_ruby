@@ -31,5 +31,15 @@ class Board
     end
   end
 
+  def empty_field?(position)
+    x = position[0]
+    y = position[1]
+    @value[x][y] == " "
+  end
+
+  def occupied_by_an_ally?(destination, active_player)
+    active_player.pieces.any? { |piece| piece.position == destination }
+  end
+
 end
 

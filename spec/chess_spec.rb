@@ -12,7 +12,7 @@ describe Chess do
 
     describe Pawn do
 
-      xcontext 'when moving' do
+      context 'when moving' do
         before do
           @pawn = Pawn.new(:white, [1,1])
         end
@@ -25,13 +25,14 @@ describe Chess do
 
       end
 
-      xcontext 'testing if [6,2] can move diagonally to kill [5,1]' do
+      context 'testing if [6,2] can move diagonally to kill [5,1]' do
 
         before do
           plr1.pieces << Pawn.new(:white, [5,1] )
           update
           @killer = plr2.pieces.select { |piece| piece.position == [6,2] }.first
-          @killer.find_possible_moves(plr1, plr2)
+          @killer.receive_environment(plr1, plr2)
+          @killer.find_possible_moves
         end
 
         it 'adds an extra move when possible to kill another piece' do
@@ -39,35 +40,19 @@ describe Chess do
         end
       end
 
-      xcontext 'testing if [1,1] can move diagonally to kill [2,2]' do
+      context 'testing if [1,1] can move diagonally to kill [2,2]' do
         before do
           plr2.pieces << Pawn.new(:black, [2,2] )
           update
           @killer = plr1.pieces.select { |piece| piece.position == [1,1] }.first
-          @killer.find_possible_moves(plr1, plr2)
+          @killer.receive_environment(plr1, plr2)
+          @killer.find_possible_moves
         end
 
         it 'adds an extra move when possible to kill another piece' do
           expect(@killer.possible_moves).to match_array([[2,2], [3,1], [2,1]])
         end
       end
-
-
-      describe '#pawn_promotion' do
-        it 'removes pawn, creates queen' do
-            plr1.pieces = []
-            plr2.pieces = []
-            plr1.pieces << Pawn.new(:white, [1,1] )
-            @pawn = plr1.pieces.first
-
-            @pawn.instance_variable_set(:@input, 'QUEEN')
-            @pawn.position = [7,1]
-
-
-          end
-
-
-      end
-
     end
+
 end

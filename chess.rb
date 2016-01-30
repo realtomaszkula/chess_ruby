@@ -8,6 +8,7 @@ class Chess
     create_players
     create_clear_board
     @active_player = @plr1
+    @opposing_player = @plr2
     collect_all_pieces
   end
 
@@ -22,16 +23,22 @@ class Chess
     input = input_move()
 
     @selected_position = split_and_convert(input[0])
+    @selected_destination = split_and_convert(input[1])
     @selected_figure = @active_player.pieces.select { |piece| piece.position == @selected_position }.first
     puts "Incorrect, try again"; player_move if @selected_figure == nil
-
-    @selected_destination = split_and_convert(input[1])
 
     @selected_figure.receive_environment(@plr1, @plr2)
     @selected_figure.find_possible_moves
     puts "Incorrect, try again"; player_move unless @selected_figure.possible_moves.include?(@selected_destination)
 
-    @selected_figure.position = @selected_destination
+    if @board.empty_field?(@selected_destination)
+      @selected_figure.position = @selected_destination
+    elsif @board.occupied_by_an_ally?(@selected_destination, @active_player)
+      puts "Incorrect, try again"; player_move
+    else
+      @selected_figure.position = @selected_destination
+    end
+
 
 
     collect_all_pieces

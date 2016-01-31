@@ -24,7 +24,7 @@ class Chess
       player_move
     end
 
-    @selected_figure.receive_environment(@plr1, @plr2)
+    @selected_figure.receive_environment(@active_player, @opposing_player)
     @selected_figure.find_possible_moves
 
     unless @selected_figure.possible_moves.include?(@selected_destination)

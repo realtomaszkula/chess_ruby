@@ -11,9 +11,9 @@ class Piece
     @possible_moves = []
   end
 
-  def receive_environment(plr1, plr2)
-    @plr1 = plr1
-    @plr2 = plr2
+  def receive_environment(active_player, opposing_player)
+    @active_player = active_player
+    @opposing_player = opposing_player
   end
 
 end
@@ -59,13 +59,13 @@ class Pawn < Piece
     when :white
       @possible_moves << [x+1, y]
       @possible_moves << [x+2, y]   unless @moved
-      @possible_moves << [x+1, y+1] if @plr2.pieces.any? { |piece| piece.position == [x+1, y+1] }
-      @possible_moves << [x+1, y-1] if @plr2.pieces.any? { |piece| piece.position == [x+1, y-1] }
+      @possible_moves << [x+1, y+1] if @opposing_player.pieces.any? { |piece| piece.position == [x+1, y+1] }
+      @possible_moves << [x+1, y-1] if @opposing_player.pieces.any? { |piece| piece.position == [x+1, y-1] }
     when :black
       @possible_moves << [x-1, y]
       @possible_moves << [x-2, y]   unless @moved
-      @possible_moves << [x-1, y+1] if @plr1.pieces.any? { |piece| piece.position == [x-1, y+1] }
-      @possible_moves << [x-1, y-1] if @plr1.pieces.any? { |piece| piece.position == [x-1, y-1] }
+      @possible_moves << [x-1, y+1] if @opposing_player.pieces.any? { |piece| piece.position == [x-1, y+1] }
+      @possible_moves << [x-1, y-1] if @opposing_player.pieces.any? { |piece| piece.position == [x-1, y-1] }
     end
   end
 
@@ -179,8 +179,6 @@ class King < Piece
 
   def find_possible_moves
     x, y = @position[0], @position[1]
-    @possible_moves = []
-
     @possible_moves
   end
 end
@@ -203,7 +201,27 @@ class Rook < Piece
     x, y = @position[0], @position[1]
     @possible_moves = []
 
-    @possible_moves
+    # one = false
+    # for i in 0..x
+    #   break if @
+    #   @possible_moves << [x,y]
+    # end
+
+    # one = false
+    # for i in x..7
+    #   @possible_moves << [x,y]
+    # end
+
+    # one = false
+    # for i in y..7
+    #   @possible_moves << [x,y]
+    # end
+
+    # one = false
+    # for i in y..x
+    #   @possible_moves << [x,y]
+    # end
+    # @possible_moves
   end
 
 end

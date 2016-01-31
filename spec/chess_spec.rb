@@ -31,7 +31,7 @@ describe Chess do
           plr1.pieces << Pawn.new(:white, [5,1] )
           update
           @killer = plr2.pieces.select { |piece| piece.position == [6,2] }.first
-          @killer.receive_environment(plr1, plr2)
+          @killer.receive_environment(plr2, plr1)
           @killer.find_possible_moves
         end
 

@@ -202,19 +202,23 @@ class Rook < Piece
     @possible_moves = []
 
     for i in (x+1)..7
-      @possible_moves << [i,y] unless @active_player.pieces.any? { |piece| piece.position ==  [i,y] }
-    end
-
-    for i in (y+1)..7
-      @possible_moves << [x,i] unless @active_player.pieces.any? { |piece| piece.position ==  [x,i] }
+      break if @active_player.pieces.any? { |piece| piece.position ==  [i,y] }
+      @possible_moves << [i,y]
     end
 
     for i in (x-1).downto(0)
-      @possible_moves << [i,y] unless @active_player.pieces.any? { |piece| piece.position ==  [i,y] }
+      break if @active_player.pieces.any? { |piece| piece.position ==  [i,y] }
+      @possible_moves << [i,y]
+    end
+
+    for i in (y+1)..7
+      break if @active_player.pieces.any? { |piece| piece.position ==  [x,i] }
+      @possible_moves << [x,i]
     end
 
     for i in (y-1).downto(0)
-      @possible_moves << [x,i] unless @active_player.pieces.any? { |piece| piece.position ==  [x,i] }
+      break if @active_player.pieces.any? { |piece| piece.position ==  [x,i] }
+      @possible_moves << [x,i]
     end
 
     @possible_moves

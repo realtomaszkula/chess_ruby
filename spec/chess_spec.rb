@@ -161,25 +161,23 @@ describe Chess do
             expect{ rook.find_possible_moves }.to change{ rook.possible_moves.size }.from(0).to(12) # 2 up, 7 left+right, 3 down
           end
 
-          # xit 'left' do
-          #   plr2.pieces = []
-          #   plr1.pieces = []
-          #   plr1.pieces << Pawn.new(:white, [4,3]
-          #   rook = Rook.new(:white, [4,4])
-          #   rook.receive_environment(plr1, plr2)
-          #   expect{ rook.find_possible_moves }.to change{ rook.possible_moves.size }.from(0).to(9) # 3 up, 4 down, 0 left, 2 right
-          # end
+          it 'left' do
+            plr2.pieces = []
+            plr1.pieces = []
+            plr1.pieces << Pawn.new(:white, [4,3])
+            rook = Rook.new(:white, [4,4])
+            rook.instance_variable_set(:@active_player, plr1)
+            expect{ rook.find_possible_moves }.to change{ rook.possible_moves.size }.from(0).to(10) # 3 up, 4 down, 0 left, 2 right
+          end
 
-          # xit 'right' do
-          #   plr2.pieces = []
-          #   plr1.pieces = []
-          #   plr1.pieces << Pawn.new(:white, [4,3]
-          #   rook = Rook.new(:white, [4,4])
-          #   rook.receive_environment(plr1, plr2)
-          #   expect{ rook.find_possible_moves }.to change{ rook.possible_moves.size }.from(0).to(11) # 3 up, 4 down, 4 left, 0 right
-          # end
-
-
+          it 'right' do
+            plr2.pieces = []
+            plr1.pieces = []
+            plr1.pieces << Pawn.new(:white, [4,5])
+            rook = Rook.new(:white, [4,4])
+            rook.instance_variable_set(:@active_player, plr1)
+            expect{ rook.find_possible_moves }.to change{ rook.possible_moves.size }.from(0).to(11) # 3 up, 4 down, 4 left, 0 right
+          end
 
         end
 

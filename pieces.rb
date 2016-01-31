@@ -3,7 +3,7 @@
 
 class Piece
   attr_reader :color, :figure, :unicode
-  attr_accessor :position, :input
+  attr_accessor :position, :possible_moves
 
   def initialize(color, position)
     @color = color
@@ -124,7 +124,7 @@ end
 
 class Bishop < Piece
   attr_reader :color, :figure
-  attr_accessor :position
+  attr_accessor :position, :possible_moves
 
   def initialize(color, position)
     super(color, position)
@@ -145,7 +145,7 @@ end
 
 class Queen < Piece
   attr_reader :color, :figure
-  attr_accessor :position
+  attr_accessor :position, :possible_moves
 
   def initialize(color, position)
     super(color, position)
@@ -165,7 +165,7 @@ end
 
 class King < Piece
   attr_reader :color, :figure
-  attr_accessor :position
+  attr_accessor :position, :possible_moves
 
   def initialize(color, position)
     super(color, position)
@@ -185,7 +185,7 @@ end
 
 class Rook < Piece
   attr_reader :color, :figure
-  attr_accessor :position
+  attr_accessor :position, :possible_moves
 
   def initialize(color, position)
     super(color, position)

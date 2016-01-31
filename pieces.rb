@@ -122,26 +122,6 @@ class Knight < Piece
   end
 end
 
-class Bishop < Piece
-  attr_reader :color, :figure
-  attr_accessor :position, :possible_moves
-
-  def initialize(color, position)
-    super(color, position)
-    @figure = :bishop
-    @unicode =  case @color
-                when :white then "\u2657"
-                when :black then "\u265D"
-                end
-
-  end
-  def find_possible_moves
-    x, y = @position[0], @position[1]
-    @possible_moves = []
-
-    @possible_moves
-  end
-end
 
 class Queen < Piece
   attr_reader :color, :figure
@@ -235,10 +215,40 @@ class Rook < Piece
     p @possible_moves
     @possible_moves
   end
-
 end
 
 
+class Bishop < Piece
+  attr_reader :color, :figure
+  attr_accessor :position, :possible_moves
+
+  def initialize(color, position)
+    super(color, position)
+    @figure = :bishop
+    @unicode =  case @color
+                when :white then "\u2657"
+                when :black then "\u265D"
+                end
+
+  end
+  def find_possible_moves
+    x, y = @position[0], @position[1]
+    @possible_moves = []
+
+    a = x + 1
+    b = y + 1
+
+    for i in 0..7
+      break unless (a+i).between?(0,7) ||  (b+i).between?(0,7)
+      break if @active_player.pieces.any? { |piece| piece.position ==  [a+i,b+i] }
+      count += 1 if @opposing_player.pieces.any? { |piece| piece.position ==  [a+i,b+i] }
+      break if count == 2
+      @possible_moves << [a+i,b+i]
+    end
+
+    @possible_moves
+  end
+end
 
 
 

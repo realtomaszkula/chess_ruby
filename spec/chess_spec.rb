@@ -215,7 +215,7 @@ describe Chess do
         end
     end
 
-    xdescribe Bishop do
+    describe Bishop do
       context 'when moving on empty board' do
         before do
           plr1.pieces = []

@@ -117,13 +117,14 @@ class Knight < Piece
 end
 
 class Rook < Piece
-  attr_reader :color, :figure
+  attr_reader :color, :figure, :moved
   attr_accessor :position, :possible_moves
 
-  def initialize(color, position)
+  def initialize(color, position, side = nil)
     super(color, position)
     @figure = :rook
-    @castling = true
+    @moved = false
+    @side = side
     @unicode =  case @color
                 when :white then "\u2656"
                 when :black then "\u265C"
@@ -132,6 +133,11 @@ class Rook < Piece
 
   def find_possible_moves
     @possible_moves = Rooky::find_possible_moves(@position[0], @position[1], @active_player, @opposing_player)
+  end
+
+  def position=(destination)
+    @position = destination
+    @moved = true
   end
 end
 
@@ -155,17 +161,22 @@ class Bishop < Piece
 end
 
 class King < Piece
-  attr_reader :color, :figure
+  attr_reader :color, :figure, :moved
   attr_accessor :position, :possible_moves
 
   def initialize(color, position)
     super(color, position)
     @figure = :king
-    @castling = true
+    @moved = false
     @unicode =  case @color
                 when :white then "\u2654"
                 when :black then "\u265A"
                 end
+  end
+
+  def position=(destination)
+    @position = destination
+    @moved = true
   end
 
   def find_possible_moves

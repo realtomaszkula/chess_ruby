@@ -349,4 +349,54 @@ describe Chess do
           end
         end
     end
+
+    describe King do
+      context 'when moving on empty board' do
+        before do
+          plr1.pieces = []
+          plr2.pieces = []
+        end
+
+          it do
+            king = King.new(:white, [0,0])
+            king.receive_environment(plr1, plr2)
+            expect{ king.find_possible_moves }.to change{ king.possible_moves.size }.from(0).to(3)
+          end
+          it do
+            king = King.new(:white, [7,7])
+            king.receive_environment(plr1, plr2)
+            expect{ king.find_possible_moves }.to change{ king.possible_moves.size }.from(0).to(3)
+          end
+          it do
+            king = King.new(:white, [0,7])
+            king.receive_environment(plr1, plr2)
+            expect{ king.find_possible_moves }.to change{ king.possible_moves.size }.from(0).to(3)
+          end
+          it do
+            king = King.new(:white, [7,0])
+            king.receive_environment(plr1, plr2)
+            expect{ king.find_possible_moves }.to change{ king.possible_moves.size }.from(0).to(3)
+          end
+          it do
+            king = King.new(:white, [0,4])
+            king.receive_environment(plr1, plr2)
+            expect{ king.find_possible_moves }.to change{ king.possible_moves.size }.from(0).to(5)
+          end
+          it do
+            king = King.new(:white, [4,0])
+            king.receive_environment(plr1, plr2)
+            expect{ king.find_possible_moves }.to change{ king.possible_moves.size }.from(0).to(5)
+          end
+          it do
+            king = King.new(:white, [7,4])
+            king.receive_environment(plr1, plr2)
+            expect{ king.find_possible_moves }.to change{ king.possible_moves.size }.from(0).to(5)
+          end
+          it do
+            king = King.new(:white, [4,7])
+            king.receive_environment(plr1, plr2)
+            expect{ king.find_possible_moves }.to change{ king.possible_moves.size }.from(0).to(5)
+          end
+        end
+    end
 end

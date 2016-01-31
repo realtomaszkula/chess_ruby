@@ -98,7 +98,7 @@ describe Chess do
     end
 
     describe Rook do
-      context 'when moving' do
+     context 'when moving on empty board' do
         before do
           plr1.pieces = []
           plr2.pieces = []
@@ -143,8 +143,47 @@ describe Chess do
             rook.receive_environment(plr1, plr2)
             expect{ rook.find_possible_moves }.to change{ rook.possible_moves.size }.from(0).to(14)
           end
+        end
 
-      end
+        context 'when finding possible moves, reacts to the presence of ally pieces' do
+          it 'down' do
+            plr2.pieces = []
+            rook = Rook.new(:white, [4,4])
+            rook.instance_variable_set(:@active_player, plr1)
+            expect{ rook.find_possible_moves }.to change{ rook.possible_moves.size }.from(0).to(12) # 3 up, 7 left+right, 2 down
+
+          end
+
+          it 'up' do
+            plr1.pieces = []
+            rook = Rook.new(:white, [4,4])
+            rook.instance_variable_set(:@active_player, plr2)
+            expect{ rook.find_possible_moves }.to change{ rook.possible_moves.size }.from(0).to(12) # 2 up, 7 left+right, 3 down
+          end
+
+          # xit 'left' do
+          #   plr2.pieces = []
+          #   plr1.pieces = []
+          #   plr1.pieces << Pawn.new(:white, [4,3]
+          #   rook = Rook.new(:white, [4,4])
+          #   rook.receive_environment(plr1, plr2)
+          #   expect{ rook.find_possible_moves }.to change{ rook.possible_moves.size }.from(0).to(9) # 3 up, 4 down, 0 left, 2 right
+          # end
+
+          # xit 'right' do
+          #   plr2.pieces = []
+          #   plr1.pieces = []
+          #   plr1.pieces << Pawn.new(:white, [4,3]
+          #   rook = Rook.new(:white, [4,4])
+          #   rook.receive_environment(plr1, plr2)
+          #   expect{ rook.find_possible_moves }.to change{ rook.possible_moves.size }.from(0).to(11) # 3 up, 4 down, 4 left, 0 right
+          # end
+
+
+
+        end
+
+
     end
 
 

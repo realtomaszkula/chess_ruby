@@ -198,6 +198,20 @@ describe Chess do
             rook.receive_environment(plr1, plr2)
             expect{ rook.find_possible_moves }.to change{ rook.possible_moves.size }.from(0).to(12) # 1 up, 7 left+right, 4 down
           end
+
+          it 'left' do
+            plr1.pieces <<  rook = Rook.new(:white, [4,4])
+            plr2.pieces << Pawn.new(:black, [2,4]) << Pawn.new(:black, [3,4])
+            rook.receive_environment(plr1, plr2)
+            expect{ rook.find_possible_moves }.to change{ rook.possible_moves.size }.from(0).to(11) #  7 up and down, 1 left, 3 right
+          end
+
+          it 'right' do
+            plr1.pieces <<  rook = Rook.new(:white, [4,4])
+            plr2.pieces << Pawn.new(:black, [5,4]) << Pawn.new(:black, [6,4])
+            rook.receive_environment(plr1, plr2)
+            expect{ rook.find_possible_moves }.to change{ rook.possible_moves.size }.from(0).to(12) # 7 up and down, 4 left, 1 right
+          end
         end
     end
 

@@ -264,7 +264,7 @@ describe Chess do
           end
         end
 
-        context 'when finding possible moves, reacts to the presence of ally pieces' do
+        xcontext 'when finding possible moves, reacts to the presence of ally pieces' do
           it 'down' do
             plr2.pieces = []
             bishop = Bishop.new(:white, [4,4])
@@ -315,7 +315,7 @@ describe Chess do
           end
         end
 
-        context 'when finding possible moves, reacts to the presence of enemy pieces' do
+        xcontext 'when finding possible moves, reacts to the presence of enemy pieces' do
           before do
             plr1.pieces = []
             plr2.pieces = []

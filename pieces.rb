@@ -252,11 +252,35 @@ class Bishop < Piece
 
     count = 0
     for i in 0..7
-      break unless (a-i).between?(0,7) || (b+i).between?(0,7)
+      break unless (a-i).between?(0,7) && (b+i).between?(0,7)
       break if @active_player.pieces.any? { |piece| piece.position ==  [a-i,b+i] }
       count += 1 if @opposing_player.pieces.any? { |piece| piece.position ==  [a-i,b+i] }
       break if count == 2
       @possible_moves << [a-i,b+i]
+    end
+
+    a = x + 1
+    b = y - 1
+
+    count = 0
+    for i in 0..7
+      break unless (a+i).between?(0,7) && (b-i).between?(0,7)
+      break if @active_player.pieces.any? { |piece| piece.position ==  [a+i,b-i] }
+      count += 1 if @opposing_player.pieces.any? { |piece| piece.position ==  [a+i,b-i] }
+      break if count == 2
+      @possible_moves << [a+i,b-i]
+    end
+
+    a = x - 1
+    b = y - 1
+
+    count = 0
+    for i in 0..7
+      break unless (a-i).between?(0,7) && (b-i).between?(0,7)
+      break if @active_player.pieces.any? { |piece| piece.position ==  [a-i,b-i] }
+      count += 1 if @opposing_player.pieces.any? { |piece| piece.position ==  [a-i,b-i] }
+      break if count == 2
+      @possible_moves << [a-i,b-i]
     end
 
     @possible_moves

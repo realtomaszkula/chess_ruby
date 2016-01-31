@@ -97,6 +97,55 @@ describe Chess do
       end
     end
 
+    describe Rook do
+      context 'when moving' do
+        before do
+          plr1.pieces = []
+          plr2.pieces = []
+        end
+          it do
+            knight = Knight.new(:white, [0,0])
+            # knight.receive_environment(plr1, plr2)
+            expect{ knight.find_possible_moves }.to change{ knight.possible_moves.size }.from(0).to(14)
+          end
+          it do
+            knight = Knight.new(:white, [7,7])
+            # knight.receive_environment(plr1, plr2)
+            expect{ knight.find_possible_moves }.to change{ knight.possible_moves.size }.from(0).to(14)
+          end
+          it do
+            knight = Knight.new(:white, [0,7])
+            # knight.receive_environment(plr1, plr2)
+            expect{ knight.find_possible_moves }.to change{ knight.possible_moves.size }.from(0).to(14)
+          end
+          it do
+            knight = Knight.new(:white, [7,0])
+            # knight.receive_environment(plr1, plr2)
+            expect{ knight.find_possible_moves }.to change{ knight.possible_moves.size }.from(0).to(14)
+          end
+          it do
+            knight = Knight.new(:white, [0,4])
+            # knight.receive_environment(plr1, plr2)
+            expect{ knight.find_possible_moves }.to change{ knight.possible_moves.size }.from(0).to(14)
+          end
+          it do
+            knight = Knight.new(:white, [0,4])
+            # knight.receive_environment(plr1, plr2)
+            expect{ knight.find_possible_moves }.to change{ knight.possible_moves.size }.from(0).to(14)
+          end
+          it do
+            knight = Knight.new(:white, [7,4])
+            # knight.receive_environment(plr1, plr2)
+            expect{ knight.find_possible_moves }.to change{ knight.possible_moves.size }.from(0).to(14)
+          end
+          it do
+            knight = Knight.new(:white, [7,4])
+            knight.receive_environment(plr1, plr2)
+            expect{ knight.find_possible_moves }.to change{ knight.possible_moves.size }.from(0).to(14)
+          end
+
+      end
+    end
 
 
 end

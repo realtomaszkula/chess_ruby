@@ -55,6 +55,10 @@ describe Chess do
       end
     end
 
+    describe Knight do
+
+    end
+
 
 
 end

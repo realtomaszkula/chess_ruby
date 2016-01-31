@@ -263,5 +263,90 @@ describe Chess do
             expect{ bishop.find_possible_moves }.to change{ bishop.possible_moves.size }.from(0).to(7)
           end
         end
+
+        context 'when finding possible moves, reacts to the presence of ally pieces' do
+          it 'down' do
+            plr2.pieces = []
+            bishop = Bishop.new(:white, [4,4])
+            bishop.receive_environment(plr1, plr2)
+            expect{ bishop.find_possible_moves }.to change{ bishop.possible_moves.size }.from(0).to(6)
+
+          end
+
+          it 'up' do
+            plr1.pieces = []
+            bishop = Bishop.new(:white, [4,4])
+            bishop.receive_environment(plr2, plr1)
+            expect{ bishop.find_possible_moves }.to change{ bishop.possible_moves.size }.from(0).to(4)
+          end
+
+          it 'left-down' do
+            plr2.pieces = []
+            plr1.pieces = []
+            plr1.pieces << Pawn.new(:white, [3,3])
+            bishop = Bishop.new(:white, [4,4])
+            bishop.receive_environment(plr1, plr2)
+            expect{ bishop.find_possible_moves }.to change{ bishop.possible_moves.size }.from(0).to(9)
+          end
+
+          it 'right-down' do
+            plr2.pieces = []
+            plr1.pieces = []
+            plr1.pieces << Pawn.new(:white, [3,5])
+            bishop = Bishop.new(:white, [4,4])
+            bishop.receive_environment(plr1, plr2)
+            expect{ bishop.find_possible_moves }.to change{ bishop.possible_moves.size }.from(0).to(9)
+          end
+          it 'left-up' do
+            plr2.pieces = []
+            plr1.pieces = []
+            plr1.pieces << Pawn.new(:white, [5,3])
+            bishop = Bishop.new(:white, [4,4])
+            bishop.receive_environment(plr1, plr2)
+            expect{ bishop.find_possible_moves }.to change{ bishop.possible_moves.size }.from(0).to(9)
+          end
+          it 'right-up' do
+            plr2.pieces = []
+            plr1.pieces = []
+            plr1.pieces << Pawn.new(:white, [5,5])
+            bishop = Bishop.new(:white, [4,4])
+            bishop.receive_environment(plr1, plr2)
+            expect{ bishop.find_possible_moves }.to change{ bishop.possible_moves.size }.from(0).to(9)
+          end
+        end
+
+        context 'when finding possible moves, reacts to the presence of enemy pieces' do
+          before do
+            plr1.pieces = []
+            plr2.pieces = []
+          end
+          it 'left-down' do
+            plr1.pieces <<  bishop = Bishop.new(:white, [4,4])
+            plr2.pieces << Pawn.new(:black, [3,3]) << Pawn.new(:black, [2,2])
+            bishop.receive_environment(plr1, plr2)
+            expect{ bishop.find_possible_moves }.to change{ bishop.possible_moves.size }.from(0).to(10)
+          end
+
+          it 'left-up' do
+            plr1.pieces <<  bishop = Bishop.new(:white, [4,4])
+            plr2.pieces << Pawn.new(:black, [3,5]) << Pawn.new(:black, [2,6])
+            bishop.receive_environment(plr1, plr2)
+            expect{ bishop.find_possible_moves }.to change{ bishop.possible_moves.size }.from(0).to(11)
+          end
+
+          it 'right-up' do
+            plr1.pieces <<  bishop = Bishop.new(:white, [4,4])
+            plr2.pieces << Pawn.new(:black, [5,5]) << Pawn.new(:black, [6,6])
+            bishop.receive_environment(plr1, plr2)
+            expect{ bishop.find_possible_moves }.to change{ bishop.possible_moves.size }.from(0).to(11)
+          end
+
+          it 'right-down' do
+            plr1.pieces <<  bishop = Bishop.new(:white, [4,4])
+            plr2.pieces << Pawn.new(:black, [3,5]) << Pawn.new(:black, [2,6])
+            bishop.receive_environment(plr1, plr2)
+            expect{ bishop.find_possible_moves }.to change{ bishop.possible_moves.size }.from(0).to(11)
+          end
+        end
     end
 end

@@ -26,19 +26,19 @@ describe Chess do
           it 'to a square occupied by an ally' do
             plr2.pieces = []
             plr1.pieces = []
-            plr1.pieces << Pawn.new(:white, [0,1])
-            pawn = Pawn.new(:white, [0,2])
+            plr1.pieces << Pawn.new(:white, [3,1])
+            pawn = Pawn.new(:white, [1,1])
             pawn.receive_environment(plr1, plr2)
-            expect{ pawn.find_possible_moves }.to change{ pawn.possible_moves.size }.from(0).to(10)
+            expect{ pawn.find_possible_moves }.to change{ pawn.possible_moves.size }.from(0).to(1)
           end
 
           it 'to a square occupied by an ally' do
             plr2.pieces = []
             plr1.pieces = []
-            plr1.pieces << Pawn.new(:white, [0,1])
-            pawn = Pawn.new(:white, [0,2])
+            plr1.pieces << Pawn.new(:white, [2,1])
+            pawn = Pawn.new(:white, [1,1])
             pawn.receive_environment(plr1, plr2)
-            expect{ pawn.find_possible_moves }.to change{ pawn.possible_moves.size }.from(0).to(10)
+            expect{ pawn.find_possible_moves }.to_not change{ pawn.possible_moves.size }
           end
 
       end

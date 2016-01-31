@@ -62,12 +62,12 @@ class Pawn < Piece
     case @color
     when :white
       @possible_moves << [x+1, y]   if empty_square?(x+1,y)
-      @possible_moves << [x+2, y]   unless @moved && !empty_square?(x+1,y) && !empty_square?(x+2,y)
+      @possible_moves << [x+2, y]   unless @moved || !empty_square?(x+1,y) || !empty_square?(x+2,y)
       @possible_moves << [x+1, y+1] if occupied_by_enemy?(x+1, y+1)
       @possible_moves << [x+1, y-1] if occupied_by_enemy?(x+1, y-1)
     when :black
       @possible_moves << [x-1, y]   if empty_square?(x-1,y)
-      @possible_moves << [x-2, y]   unless @moved && !empty_square?(x-1,y) && !empty_square?(x-2,y)
+      @possible_moves << [x-2, y]   unless @moved || !empty_square?(x-1,y) || !empty_square?(x-2,y)
       @possible_moves << [x-1, y+1] if occupied_by_enemy?(x-1, y+1)
       @possible_moves << [x-1, y-1] if occupied_by_enemy?(x-1, y-1)
     end

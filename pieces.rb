@@ -34,6 +34,7 @@ class Pawn < Piece
     @figure = :pawn
     @moved = false
     @promote_position = promote_position
+    @promote = false
     @unicode = case @color
               when :white then "\u2659"
               when :black then "\u265F"
@@ -43,7 +44,7 @@ class Pawn < Piece
   def position=(destination)
     @position = destination
     @moved = true
-    pawn_promotion if @promote_position.include?(@position)
+    @promote = true if @promote_position.include?(@position)
   end
 
   def promote_position
@@ -81,27 +82,6 @@ class Pawn < Piece
   def empty_square?(a,b)
     all_pieces = @active_player.pieces + @opposing_player.pieces
     all_pieces.none? { |piece| piece.position == [a,b] }
-  end
-
-  def pawn_promotion
-    # case @color
-    # when :black
-    #   case @input #||= gets.chomp.upcase
-    #   when 'QUEEN'  then  puts 'test' ; plr1.pieces << Queen.new(@color, [1,2])
-    #   when 'KNIGHT' then plr1.pieces << Knight.new(@color, @position)
-    #   when 'ROOK'   then plr1.pieces << Rook.new(@color, @position)
-    #   when 'BISHOP' then plr1.pieces << Bishop.new(@color, @position)
-    #   else puts 'Incorrect, try again'; pawn_promotion
-    #   end
-    # when :white
-    #   case @input #||= gets.chomp.upcase
-    #   when 'QUEEN'  then  puts 'test' ; plr2.pieces << Queen.new(@color, @position)
-    #   when 'KNIGHT' then plr2.pieces << Knight.new(@color, @position)
-    #   when 'ROOK'   then plr2.pieces << Rook.new(@color, @position)
-    #   when 'BISHOP' then plr2.pieces << Bishop.new(@color, @position)
-    #   else puts 'Incorrect, try again'; pawn_promotion
-    #   end
-    # end
   end
 
   def en_passant

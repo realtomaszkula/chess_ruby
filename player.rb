@@ -19,6 +19,21 @@ class Player
     @pieces.select{ |piece| piece = piece unless piece.position == position }.map! { |piece| piece = piece }
   end
 
+  def promote_to(figure)
+    @promoted_pawn = @pieces.select { |piece| piece.figure == :pawn }.select { |pawn| pawn.promote == true }.first
+    position = @promoted_pawn.position
+    kill_piece(position)
+
+    case figure
+    when :queen   then Queen.new(@color, position)
+    when :rook    then Rook.new(@color, position)
+    when :knight  then Knight.new(@color, position)
+    when :bishop  then Bishop.new(@color,position)
+    end
+
+
+  end
+
   def get_pieces
     case color
       when :white

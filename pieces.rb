@@ -32,6 +32,7 @@ class Pawn < Piece
               when :white then "\u2659"
               when :black then "\u265F"
               end
+    @possible_moves = []
 
   end
 
@@ -96,7 +97,7 @@ end
 
 class Knight < Piece
   attr_reader :color, :figure
-  attr_accessor :position
+  attr_accessor :position, :possible_moves
 
   def initialize(color, position)
     super(color, position)
@@ -105,35 +106,22 @@ class Knight < Piece
                 when :white then "\u2658"
                 when :black then "\u265E"
                 end
+    @possible_moves = []
   end
 
-def find_possible_moves
+  def find_possible_moves
     x, y = @position[0], @position[1]
     @possible_moves = []
-
-    case @color
-    when :white
-      @possible_moves << [x+1, y]
-      @possible_moves << [x+2, y]   unless @moved
-      @possible_moves << [x+1, y+1] if @plr2.pieces.any? { |piece| piece.position == [x+1, y+1] }
-      @possible_moves << [x+1, y-1] if @plr2.pieces.any? { |piece| piece.position == [x+1, y-1] }
-    when :black
-      @possible_moves << [x-1, y]
-      @possible_moves << [x-2, y]   unless @moved
-      @possible_moves << [x-1, y+1] if @plr1.pieces.any? { |piece| piece.position == [x-1, y+1] }
-      @possible_moves << [x-1, y-1] if @plr1.pieces.any? { |piece| piece.position == [x-1, y-1] }
-    end
-
-      a = x +  2; b = y + -1; @routes << [a,b]  if a.between?(0,7) && b.between?(0,7)
-      a = x +  1; b = y +  2; @routes << [a,b]  if a.between?(0,7) && b.between?(0,7)
-      a = x +  2; b = y +  1; @routes << [a,b]  if a.between?(0,7) && b.between?(0,7)
-      a = x + -1; b = y + -2; @routes << [a,b]  if a.between?(0,7) && b.between?(0,7)
-      a = x + -2; b = y + -1; @routes << [a,b]  if a.between?(0,7) && b.between?(0,7)
-      a = x + -1; b = y +  2; @routes << [a,b]  if a.between?(0,7) && b.between?(0,7)
-      a = x + -2; b = y +  1; @routes << [a,b]  if a.between?(0,7) && b.between?(0,7)
-
-
-
+      a = x +  1; b = y + -2; @possible_moves << [a,b]  if a.between?(0,7) && b.between?(0,7)
+      a = x +  2; b = y + -1; @possible_moves << [a,b]  if a.between?(0,7) && b.between?(0,7)
+      a = x +  1; b = y +  2; @possible_moves << [a,b]  if a.between?(0,7) && b.between?(0,7)
+      a = x +  2; b = y +  1; @possible_moves << [a,b]  if a.between?(0,7) && b.between?(0,7)
+      a = x + -1; b = y + -2; @possible_moves << [a,b]  if a.between?(0,7) && b.between?(0,7)
+      a = x + -2; b = y + -1; @possible_moves << [a,b]  if a.between?(0,7) && b.between?(0,7)
+      a = x + -1; b = y +  2; @possible_moves << [a,b]  if a.between?(0,7) && b.between?(0,7)
+      a = x + -2; b = y +  1; @possible_moves << [a,b]  if a.between?(0,7) && b.between?(0,7)
+      @possible_moves
+  end
 end
 
 class Bishop < Piece

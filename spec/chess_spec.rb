@@ -56,7 +56,45 @@ describe Chess do
     end
 
     describe Knight do
+      context 'when moving' do
+          it do
+            knight = Knight.new(:white, [4,4])
+            expect{ knight.find_possible_moves }.to change{ knight.possible_moves.size }.from(0).to(8)
+          end
+          it do
+            knight = Knight.new(:white, [0,0])
+            expect{ knight.find_possible_moves }.to change{ knight.possible_moves.size }.from(0).to(2)
+          end
+          it do
+            knight = Knight.new(:white, [7,7])
+            expect{ knight.find_possible_moves }.to change{ knight.possible_moves.size }.from(0).to(2)
+          end
+          it do
+            knight = Knight.new(:white, [0,7])
+            expect{ knight.find_possible_moves }.to change{ knight.possible_moves.size }.from(0).to(2)
+          end
+          it do
+            knight = Knight.new(:white, [7,0])
+            expect{ knight.find_possible_moves }.to change{ knight.possible_moves.size }.from(0).to(2)
+          end
+          it do
+            knight = Knight.new(:white, [0,4])
+            expect{ knight.find_possible_moves }.to change{ knight.possible_moves.size }.from(0).to(4)
+          end
+          it do
+            knight = Knight.new(:white, [0,4])
+            expect{ knight.find_possible_moves }.to change{ knight.possible_moves.size }.from(0).to(4)
+          end
+          it do
+            knight = Knight.new(:white, [7,4])
+            expect{ knight.find_possible_moves }.to change{ knight.possible_moves.size }.from(0).to(4)
+          end
+          it do
+            knight = Knight.new(:white, [7,4])
+            expect{ knight.find_possible_moves }.to change{ knight.possible_moves.size }.from(0).to(4)
+          end
 
+      end
     end
 
 

@@ -280,6 +280,11 @@ describe Chess do
             bishop.receive_environment(plr1, plr2)
             expect{ bishop.find_possible_moves }.to change{ bishop.possible_moves.size }.from(0).to(7)
           end
+          it do
+            bishop = Bishop.new(:white, [4,4])
+            bishop.receive_environment(plr1, plr2)
+            expect{ bishop.find_possible_moves }.to change{ bishop.possible_moves.size }.from(0).to(13)
+          end
         end
 
         context 'when finding possible moves, reacts to the presence of ally pieces' do
@@ -468,4 +473,54 @@ describe Chess do
           end
         end
     end
+
+    xdescribe Queen do
+      context 'when moving on empty board' do
+        before do
+          plr1.pieces = []
+          plr2.pieces = []
+        end
+
+        it do
+            queen = Queen.new(:white, [0,0])
+            queen.receive_environment(plr1, plr2)
+            expect{ queen.find_possible_moves }.to change{ queen.possible_moves.size }.from(0).to(27)
+          end
+          it do
+            queen = Queen.new(:white, [7,7])
+            queen.receive_environment(plr1, plr2)
+            expect{ queen.find_possible_moves }.to change{ queen.possible_moves.size }.from(0).to(7)
+          end
+          it do
+            queen = Queen.new(:white, [0,7])
+            queen.receive_environment(plr1, plr2)
+            expect{ queen.find_possible_moves }.to change{ queen.possible_moves.size }.from(0).to(7)
+          end
+          it do
+            queen = Queen.new(:white, [7,0])
+            queen.receive_environment(plr1, plr2)
+            expect{ queen.find_possible_moves }.to change{ queen.possible_moves.size }.from(0).to(7)
+          end
+          it do
+            queen = Queen.new(:white, [0,4])
+            queen.receive_environment(plr1, plr2)
+            expect{ queen.find_possible_moves }.to change{ queen.possible_moves.size }.from(0).to(7)
+          end
+          it do
+            queen = Queen.new(:white, [4,0])
+            queen.receive_environment(plr1, plr2)
+            expect{ queen.find_possible_moves }.to change{ queen.possible_moves.size }.from(0).to(7)
+          end
+          it do
+            queen = Queen.new(:white, [7,4])
+            queen.receive_environment(plr1, plr2)
+            expect{ queen.find_possible_moves }.to change{ queen.possible_moves.size }.from(0).to(7)
+          end
+          it do
+            queen = Queen.new(:white, [4,7])
+            queen.receive_environment(plr1, plr2)
+            expect{ queen.find_possible_moves }.to change{ queen.possible_moves.size }.from(0).to(7)
+          end
+        end
+      end
 end

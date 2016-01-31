@@ -13,6 +13,12 @@ class Chess
     implement_changes
   end
 
+  def play
+    player_move
+    impement_changes
+    change_turn
+  end
+
   def player_move
     input = input_move()
     @selected_position = split_and_convert(input[0])
@@ -48,13 +54,16 @@ class Chess
           input[0].ord.between?(65,72) &&
           input[3].ord.between?(65,72) &&
           input[1].to_i.between?(1,8)  &&
-          input[4].to_i.between?(1,8))
+          input[4].to_i.between?(1,8)) || input == 'SAVE' || input == 'CASTLE'
        puts "Incorrect, try agaiaan"
        input = gets.chomp.upcase
     end
 
-    if input == 'SAVE' then save_the_game; input_move end
-    input = input.split ## ["A1" "A2"]
+    case input
+    when 'SAVE' then save_the_game; input_move
+    when 'CASTLE' then castle;
+    else input = input.split
+    end  ## ["A1" "A2"]
   end
 
   def split_and_convert(input)
@@ -113,10 +122,7 @@ class Chess
     # draw_board
   end
 
-  def play
-    player_move
-    impement_changes
-    change_turn
+  def castle
   end
 
 end

@@ -522,5 +522,123 @@ describe Chess do
             expect{ queen.find_possible_moves }.to change{ queen.possible_moves.size }.from(0).to(7)
           end
         end
+
+      context 'when finding possible moves, reacts to the presence of ally pieces' do
+          it 'down' do
+            plr2.pieces = []
+            queen = Queen.new(:white, [4,4])
+            queen.receive_environment(plr1, plr2)
+            expect{ queen.find_possible_moves }.to change{ queen.possible_moves.size }.from(0).to(21)
+
+          end
+
+          it 'up' do
+            plr1.pieces = []
+            queen = Queen.new(:white, [4,4])
+            queen.receive_environment(plr2, plr1)
+            expect{ queen.find_possible_moves }.to change{ queen.possible_moves.size }.from(0).to(21)
+          end
+
+          it 'left-down' do
+            plr2.pieces = []
+            plr1.pieces = []
+            plr1.pieces << Pawn.new(:white, [3,3])
+            queen = Queen.new(:white, [4,4])
+            queen.receive_environment(plr1, plr2)
+            expect{ queen.find_possible_moves }.to change{ queen.possible_moves.size }.from(0).to(23)
+          end
+
+          it 'right-down' do
+            plr2.pieces = []
+            plr1.pieces = []
+            plr1.pieces << Pawn.new(:white, [3,5])
+            queen = Queen.new(:white, [4,4])
+            queen.receive_environment(plr1, plr2)
+            expect{ queen.find_possible_moves }.to change{ queen.possible_moves.size }.from(0).to(23)
+          end
+          it 'left-up' do
+            plr2.pieces = []
+            plr1.pieces = []
+            plr1.pieces << Pawn.new(:white, [5,3])
+            queen = Queen.new(:white, [4,4])
+            queen.receive_environment(plr1, plr2)
+            expect{ queen.find_possible_moves }.to change{ queen.possible_moves.size }.from(0).to(23)
+          end
+          it 'right-up' do
+            plr2.pieces = []
+            plr1.pieces = []
+            plr1.pieces << Pawn.new(:white, [5,5])
+            queen = Queen.new(:white, [4,4])
+            queen.receive_environment(plr1, plr2)
+            expect{ queen.find_possible_moves }.to change{ queen.possible_moves.size }.from(0).to(23)
+          end
+        end
+
+        context 'when finding possible moves, reacts to the presence of enemy pieces' do
+          before do
+            plr1.pieces = []
+            plr2.pieces = []
+          end
+          it 'left-down' do
+            plr1.pieces <<  queen = Queen.new(:white, [4,4])
+            plr2.pieces << Pawn.new(:black, [3,3]) << Pawn.new(:black, [2,2])
+            queen.receive_environment(plr1, plr2)
+            expect{ queen.find_possible_moves }.to change{ queen.possible_moves.size }.from(0).to(24)
+          end
+
+          it 'left-up' do
+            plr1.pieces <<  queen = Queen.new(:white, [4,4])
+            plr2.pieces << Pawn.new(:black, [3,5]) << Pawn.new(:black, [2,6])
+            queen.receive_environment(plr1, plr2)
+            expect{ queen.find_possible_moves }.to change{ queen.possible_moves.size }.from(0).to(25)
+          end
+
+          it 'right-up' do
+            plr1.pieces <<  queen = Queen.new(:white, [4,4])
+            plr2.pieces << Pawn.new(:black, [5,5]) << Pawn.new(:black, [6,6])
+            queen.receive_environment(plr1, plr2)
+            expect{ queen.find_possible_moves }.to change{ queen.possible_moves.size }.from(0).to(25)
+          end
+
+          it 'right-down' do
+            plr1.pieces <<  queen = Queen.new(:white, [4,4])
+            plr2.pieces << Pawn.new(:black, [3,5]) << Pawn.new(:black, [2,6])
+            queen.receive_environment(plr1, plr2)
+            expect{ queen.find_possible_moves }.to change{ queen.possible_moves.size }.from(0).to(25)
+          end
+
+
+          it 'down' do
+            plr1.pieces <<  queen = Queen.new(:white, [4,4])
+            plr2.pieces << Pawn.new(:black, [3,4]) << Pawn.new(:black, [2,4])
+            queen.receive_environment(plr1, plr2)
+            expect{ queen.find_possible_moves }.to change{ queen.possible_moves.size }.from(0).to(24)
+          end
+
+
+          it 'up' do
+            plr1.pieces <<  queen = Queen.new(:white, [4,4])
+            plr2.pieces << Pawn.new(:black, [5,4]) << Pawn.new(:black, [5,4])
+            queen.receive_environment(plr1, plr2)
+            expect{ queen.find_possible_moves }.to change{ queen.possible_moves.size }.from(0).to(25)
+          end
+
+
+          it 'left' do
+            plr1.pieces <<  queen = Queen.new(:white, [4,4])
+            plr2.pieces << Pawn.new(:black, [4,3]) << Pawn.new(:black, [4,2])
+            queen.receive_environment(plr1, plr2)
+            expect{ queen.find_possible_moves }.to change{ queen.possible_moves.size }.from(0).to(24)
+          end
+
+
+
+          it 'right' do
+            plr1.pieces <<  queen = Queen.new(:white, [4,4])
+            plr2.pieces << Pawn.new(:black, [4,5]) << Pawn.new(:black, [4,6])
+            queen.receive_environment(plr1, plr2)
+            expect{ queen.find_possible_moves }.to change{ queen.possible_moves.size }.from(0).to(25)
+          end
+        end
       end
 end

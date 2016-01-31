@@ -27,19 +27,18 @@ describe Chess do
             plr2.pieces = []
             plr1.pieces = []
             plr1.pieces << Pawn.new(:white, [0,1])
-            bishop = Bishop.new(:white, [0,2])
-            bishop.receive_environment(plr1, plr2)
-            expect{ bishop.find_possible_moves }.to change{ bishop.possible_moves.size }.from(0).to(10)
+            pawn = Pawn.new(:white, [0,2])
+            pawn.receive_environment(plr1, plr2)
+            expect{ pawn.find_possible_moves }.to change{ pawn.possible_moves.size }.from(0).to(10)
           end
-
 
           it 'to a square occupied by an ally' do
             plr2.pieces = []
             plr1.pieces = []
             plr1.pieces << Pawn.new(:white, [0,1])
-            bishop = Bishop.new(:white, [0,2])
-            bishop.receive_environment(plr1, plr2)
-            expect{ bishop.find_possible_moves }.to change{ bishop.possible_moves.size }.from(0).to(10)
+            pawn = Pawn.new(:white, [0,2])
+            pawn.receive_environment(plr1, plr2)
+            expect{ pawn.find_possible_moves }.to change{ pawn.possible_moves.size }.from(0).to(10)
           end
 
       end

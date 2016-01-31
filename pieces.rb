@@ -135,7 +135,6 @@ class Knight < Piece
   end
 end
 
-
 class Queen < Piece
   attr_reader :color, :figure
   attr_accessor :position, :possible_moves

@@ -178,7 +178,26 @@ describe Chess do
             rook.receive_environment(plr1, plr2)
             expect{ rook.find_possible_moves }.to change{ rook.possible_moves.size }.from(0).to(11) # 3 up, 4 down, 4 left, 0 right
           end
+        end
 
+        context 'when finding possible moves, reacts to the presence of enemy pieces' do
+          before do
+            plr1.pieces = []
+            plr2.pieces = []
+          end
+          it 'down' do
+            plr1.pieces <<  rook = Rook.new(:white, [4,4])
+            plr2.pieces << Pawn.new(:black, [4,3]) << Pawn.new(:black, [4,2])
+            rook.receive_environment(plr1, plr2)
+            expect{ rook.find_possible_moves }.to change{ rook.possible_moves.size }.from(0).to(11) # 3 up, 7 left+right, 1 down
+          end
+
+          it 'up' do
+            plr1.pieces <<  rook = Rook.new(:white, [4,4])
+            plr2.pieces << Pawn.new(:black, [4,5]) << Pawn.new(:black, [4,6])
+            rook.receive_environment(plr1, plr2)
+            expect{ rook.find_possible_moves }.to change{ rook.possible_moves.size }.from(0).to(12) # 1 up, 7 left+right, 4 down
+          end
         end
     end
 

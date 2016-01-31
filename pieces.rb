@@ -201,38 +201,38 @@ class Rook < Piece
     x, y = @position[0], @position[1]
     @possible_moves = []
 
-    one = false
+    count = 0
     for i in (x+1)..7
       break if @active_player.pieces.any? { |piece| piece.position ==  [i,y] }
-      one = true if @opposing_player.pieces.any? { |piece| piece.position ==  [i,y] }
-      break if one == true
+      count += 1 if @opposing_player.pieces.any? { |piece| piece.position ==  [i,y] }
+      break if count == 2
       @possible_moves << [i,y]
     end
 
-    one = false
+    count = 0
     for i in (x-1).downto(0)
       break if @active_player.pieces.any? { |piece| piece.position ==  [i,y] }
-      one = true if @opposing_player.pieces.any? { |piece| piece.position ==  [i,y] }
-      break if one == true
+      count += 1 if @opposing_player.pieces.any? { |piece| piece.position ==  [i,y] }
+      break if count == 2
       @possible_moves << [i,y]
     end
 
-    one = false
+    count = 0
     for i in (y+1)..7
       break if @active_player.pieces.any? { |piece| piece.position ==  [x,i] }
-      one = true if @opposing_player.pieces.any? { |piece| piece.position ==  [i,y] }
-      break if one == true
+      count += 1 if @opposing_player.pieces.any? { |piece| piece.position ==  [x,i] }
+      break if count == 2
       @possible_moves << [x,i]
     end
 
-    one = false
+    count = 0
     for i in (y-1).downto(0)
       break if @active_player.pieces.any? { |piece| piece.position ==  [x,i] }
-      one = true if @opposing_player.pieces.any? { |piece| piece.position ==  [i,y] }
-      break if one == true
+      count += 1 if @opposing_player.pieces.any? { |piece| piece.position ==  [x,i] }
+      break if count == 2
       @possible_moves << [x,i]
     end
-
+    p @possible_moves
     @possible_moves
   end
 

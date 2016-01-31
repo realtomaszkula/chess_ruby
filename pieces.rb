@@ -8,6 +8,7 @@ class Piece
   def initialize(color, position)
     @color = color
     @position =  position
+    @possible_moves = []
   end
 
   def receive_environment(plr1, plr2)
@@ -32,8 +33,6 @@ class Pawn < Piece
               when :white then "\u2659"
               when :black then "\u265F"
               end
-    @possible_moves = []
-
   end
 
   def position=(destination)
@@ -106,7 +105,6 @@ class Knight < Piece
                 when :white then "\u2658"
                 when :black then "\u265E"
                 end
-    @possible_moves = []
   end
 
   def find_possible_moves
@@ -135,6 +133,13 @@ class Bishop < Piece
                 when :white then "\u2657"
                 when :black then "\u265D"
                 end
+
+  end
+  def find_possible_moves
+    x, y = @position[0], @position[1]
+    @possible_moves = []
+
+    @possible_moves
   end
 end
 
@@ -149,6 +154,12 @@ class Queen < Piece
                 when :white then "\u2655"
                 when :black then "\u265B"
                 end
+  end
+  def find_possible_moves
+    x, y = @position[0], @position[1]
+    @possible_moves = []
+
+    @possible_moves
   end
 end
 
@@ -165,6 +176,13 @@ class King < Piece
                 when :black then "\u265A"
                 end
   end
+
+  def find_possible_moves
+    x, y = @position[0], @position[1]
+    @possible_moves = []
+
+    @possible_moves
+  end
 end
 
 class Rook < Piece
@@ -180,6 +198,14 @@ class Rook < Piece
                 when :black then "\u265C"
                 end
   end
+
+  def find_possible_moves
+    x, y = @position[0], @position[1]
+    @possible_moves = []
+
+    @possible_moves
+  end
+
 end
 
 

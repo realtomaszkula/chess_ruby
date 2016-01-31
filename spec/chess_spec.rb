@@ -398,5 +398,90 @@ describe Chess do
             expect{ king.find_possible_moves }.to change{ king.possible_moves.size }.from(0).to(5)
           end
         end
+
+        context 'when finding possible moves, reacts to the presence of ally pieces' do
+          it 'down' do
+            plr2.pieces = []
+            king = King.new(:white, [[2,2]])
+            king.receive_environment(plr1, plr2)
+            expect{ king.find_possible_moves }.to change{ king.possible_moves.size }.from(0).to(5)
+
+          end
+
+          it 'up' do
+            plr1.pieces = []
+            king = King.new(:white, [[5,5]])
+            king.receive_environment(plr2, plr1)
+            expect{ king.find_possible_moves }.to change{ king.possible_moves.size }.from(0).to(5)
+          end
+
+          it 'left-down' do
+            plr2.pieces = []
+            plr1.pieces = []
+            plr1.pieces << Pawn.new(:white, [3,3])
+            king = King.new(:white, [[4,4]])
+            king.receive_environment(plr1, plr2)
+            expect{ king.find_possible_moves }.to change{ king.possible_moves.size }.from(0).to(7)
+          end
+
+          it 'right-down' do
+            plr2.pieces = []
+            plr1.pieces = []
+            plr1.pieces << Pawn.new(:white, [3,5])
+            king = King.new(:white, [[4,4]])
+            king.receive_environment(plr1, plr2)
+            expect{ king.find_possible_moves }.to change{ king.possible_moves.size }.from(0).to(7)
+          end
+          it 'left-up' do
+            plr2.pieces = []
+            plr1.pieces = []
+            plr1.pieces << Pawn.new(:white, [5,3])
+            king = King.new(:white, [[4,4]])
+            king.receive_environment(plr1, plr2)
+            expect{ king.find_possible_moves }.to change{ king.possible_moves.size }.from(0).to(7)
+          end
+          it 'right-up' do
+            plr2.pieces = []
+            plr1.pieces = []
+            plr1.pieces << Pawn.new(:white, [5,5])
+            king = King.new(:white, [[4,4]])
+            king.receive_environment(plr1, plr2)
+            expect{ king.find_possible_moves }.to change{ king.possible_moves.size }.from(0).to(7)
+          end
+        end
+
+        context 'when finding possible moves, reacts to the presence of enemy pieces' do
+          before do
+            plr1.pieces = []
+            plr2.pieces = []
+          end
+          it 'left-down' do
+            plr1.pieces <<  king = King.new(:white, [4,4])
+            plr2.pieces << Pawn.new(:black, [3,3]) << Pawn.new(:black, [2,2])
+            king.receive_environment(plr1, plr2)
+            expect{ king.find_possible_moves }.to change{ king.possible_moves.size }.from(0).to(10)
+          end
+
+          it 'left-up' do
+            plr1.pieces <<  king = King.new(:white, [4,4])
+            plr2.pieces << Pawn.new(:black, [3,5]) << Pawn.new(:black, [2,6])
+            king.receive_environment(plr1, plr2)
+            expect{ king.find_possible_moves }.to change{ king.possible_moves.size }.from(0).to(11)
+          end
+
+          it 'right-up' do
+            plr1.pieces <<  king = King.new(:white, [4,4])
+            plr2.pieces << Pawn.new(:black, [5,5]) << Pawn.new(:black, [6,6])
+            king.receive_environment(plr1, plr2)
+            expect{ king.find_possible_moves }.to change{ king.possible_moves.size }.from(0).to(11)
+          end
+
+          it 'right-down' do
+            plr1.pieces <<  king = King.new(:white, [4,4])
+            plr2.pieces << Pawn.new(:black, [3,5]) << Pawn.new(:black, [2,6])
+            king.receive_environment(plr1, plr2)
+            expect{ king.find_possible_moves }.to change{ king.possible_moves.size }.from(0).to(11)
+          end
+        end
     end
 end

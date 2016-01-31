@@ -143,26 +143,6 @@ class Queen < Piece
   end
 end
 
-class King < Piece
-  attr_reader :color, :figure
-  attr_accessor :position, :possible_moves
-
-  def initialize(color, position)
-    super(color, position)
-    @figure = :king
-    @castling = true
-    @unicode =  case @color
-                when :white then "\u2654"
-                when :black then "\u265A"
-                end
-  end
-
-  def find_possible_moves
-    x, y = @position[0], @position[1]
-    @possible_moves
-  end
-end
-
 class Rook < Piece
   attr_reader :color, :figure
   attr_accessor :position, :possible_moves
@@ -212,7 +192,6 @@ class Rook < Piece
       break if count == 2
       @possible_moves << [x,i]
     end
-    p @possible_moves
     @possible_moves
   end
 end
@@ -287,6 +266,41 @@ class Bishop < Piece
   end
 end
 
+class King < Piece
+  attr_reader :color, :figure
+  attr_accessor :position, :possible_moves
 
+  def initialize(color, position)
+    super(color, position)
+    @figure = :king
+    @castling = true
+    @unicode =  case @color
+                when :white then "\u2654"
+                when :black then "\u265A"
+                end
+  end
+
+  def empty_and_in_range?(a,b)
+    a.between?(0,7) && b.between?(0,7) && @active_player.pieces.none? { |piece| piece.position == [a,b] }
+  end
+
+  def find_possible_moves
+    x, y = @position[0], @position[1]
+    @possible_moves = []
+
+    a = x + 1; b = y    ; @possible_moves << [a,b] if empty_and_in_range?(a,b)
+    a = x + 1; b = y + 1; @possible_moves << [a,b] if empty_and_in_range?(a,b)
+    a = x + 1; b = y - 1; @possible_moves << [a,b] if empty_and_in_range?(a,b)
+    a = x - 1; b = y    ; @possible_moves << [a,b] if empty_and_in_range?(a,b)
+    a = x - 1; b = y + 1; @possible_moves << [a,b] if empty_and_in_range?(a,b)
+    a = x - 1; b = y - 1; @possible_moves << [a,b] if empty_and_in_range?(a,b)
+    a = x    ; b = y - 1; @possible_moves << [a,b] if empty_and_in_range?(a,b)
+    a = x    ; b = y + 1; @possible_moves << [a,b] if empty_and_in_range?(a,b)
+
+    @possible_moves
+  end
+
+
+end
 
 

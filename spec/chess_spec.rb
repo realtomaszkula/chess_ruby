@@ -474,52 +474,56 @@ describe Chess do
         end
     end
 
-    xdescribe Queen do
+    describe Queen do
       context 'when moving on empty board' do
         before do
           plr1.pieces = []
           plr2.pieces = []
         end
-
+        it do
+            queen = Queen.new(:white, [4,4])
+            queen.receive_environment(plr1, plr2)
+            expect{ queen.find_possible_moves }.to change{ queen.possible_moves.size }.from(0).to(27)
+          end
         it do
             queen = Queen.new(:white, [0,0])
             queen.receive_environment(plr1, plr2)
-            expect{ queen.find_possible_moves }.to change{ queen.possible_moves.size }.from(0).to(27)
+            expect{ queen.find_possible_moves }.to change{ queen.possible_moves.size }.from(0).to(21)
           end
           it do
             queen = Queen.new(:white, [7,7])
             queen.receive_environment(plr1, plr2)
-            expect{ queen.find_possible_moves }.to change{ queen.possible_moves.size }.from(0).to(7)
+            expect{ queen.find_possible_moves }.to change{ queen.possible_moves.size }.from(0).to(21)
           end
           it do
             queen = Queen.new(:white, [0,7])
             queen.receive_environment(plr1, plr2)
-            expect{ queen.find_possible_moves }.to change{ queen.possible_moves.size }.from(0).to(7)
+            expect{ queen.find_possible_moves }.to change{ queen.possible_moves.size }.from(0).to(21)
           end
           it do
             queen = Queen.new(:white, [7,0])
             queen.receive_environment(plr1, plr2)
-            expect{ queen.find_possible_moves }.to change{ queen.possible_moves.size }.from(0).to(7)
+            expect{ queen.find_possible_moves }.to change{ queen.possible_moves.size }.from(0).to(21)
           end
           it do
             queen = Queen.new(:white, [0,4])
             queen.receive_environment(plr1, plr2)
-            expect{ queen.find_possible_moves }.to change{ queen.possible_moves.size }.from(0).to(7)
+            expect{ queen.find_possible_moves }.to change{ queen.possible_moves.size }.from(0).to(21)
           end
           it do
             queen = Queen.new(:white, [4,0])
             queen.receive_environment(plr1, plr2)
-            expect{ queen.find_possible_moves }.to change{ queen.possible_moves.size }.from(0).to(7)
+            expect{ queen.find_possible_moves }.to change{ queen.possible_moves.size }.from(0).to(21)
           end
           it do
             queen = Queen.new(:white, [7,4])
             queen.receive_environment(plr1, plr2)
-            expect{ queen.find_possible_moves }.to change{ queen.possible_moves.size }.from(0).to(7)
+            expect{ queen.find_possible_moves }.to change{ queen.possible_moves.size }.from(0).to(21)
           end
           it do
             queen = Queen.new(:white, [4,7])
             queen.receive_environment(plr1, plr2)
-            expect{ queen.find_possible_moves }.to change{ queen.possible_moves.size }.from(0).to(7)
+            expect{ queen.find_possible_moves }.to change{ queen.possible_moves.size }.from(0).to(21)
           end
         end
 
@@ -528,8 +532,7 @@ describe Chess do
             plr2.pieces = []
             queen = Queen.new(:white, [4,4])
             queen.receive_environment(plr1, plr2)
-            expect{ queen.find_possible_moves }.to change{ queen.possible_moves.size }.from(0).to(21)
-
+            expect{ queen.find_possible_moves }.to change{ queen.possible_moves.size }.from(0).to(22)
           end
 
           it 'up' do
@@ -554,7 +557,7 @@ describe Chess do
             plr1.pieces << Pawn.new(:white, [3,5])
             queen = Queen.new(:white, [4,4])
             queen.receive_environment(plr1, plr2)
-            expect{ queen.find_possible_moves }.to change{ queen.possible_moves.size }.from(0).to(23)
+            expect{ queen.find_possible_moves }.to change{ queen.possible_moves.size }.from(0).to(24)
           end
           it 'left-up' do
             plr2.pieces = []
@@ -562,7 +565,7 @@ describe Chess do
             plr1.pieces << Pawn.new(:white, [5,3])
             queen = Queen.new(:white, [4,4])
             queen.receive_environment(plr1, plr2)
-            expect{ queen.find_possible_moves }.to change{ queen.possible_moves.size }.from(0).to(23)
+            expect{ queen.find_possible_moves }.to change{ queen.possible_moves.size }.from(0).to(24)
           end
           it 'right-up' do
             plr2.pieces = []
@@ -570,7 +573,7 @@ describe Chess do
             plr1.pieces << Pawn.new(:white, [5,5])
             queen = Queen.new(:white, [4,4])
             queen.receive_environment(plr1, plr2)
-            expect{ queen.find_possible_moves }.to change{ queen.possible_moves.size }.from(0).to(23)
+            expect{ queen.find_possible_moves }.to change{ queen.possible_moves.size }.from(0).to(24)
           end
         end
 
@@ -618,7 +621,7 @@ describe Chess do
 
           it 'up' do
             plr1.pieces <<  queen = Queen.new(:white, [4,4])
-            plr2.pieces << Pawn.new(:black, [5,4]) << Pawn.new(:black, [5,4])
+            plr2.pieces << Pawn.new(:black, [5,4]) << Pawn.new(:black, [6,4])
             queen.receive_environment(plr1, plr2)
             expect{ queen.find_possible_moves }.to change{ queen.possible_moves.size }.from(0).to(25)
           end

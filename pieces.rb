@@ -153,36 +153,29 @@ class Rook < Piece
     x, y = @position[0], @position[1]
     @possible_moves = []
 
-    count = 0
+
     for i in (x+1)..7
       break if @active_player.pieces.any? { |piece| piece.position ==  [i,y] }
-      count += 1 if @opposing_player.pieces.any? { |piece| piece.position ==  [i,y] }
-      break if count == 2
       @possible_moves << [i,y]
+      break if @opposing_player.pieces.any? { |piece| piece.position ==  [i,y] }
     end
 
-    count = 0
     for i in (x-1).downto(0)
       break if @active_player.pieces.any? { |piece| piece.position ==  [i,y] }
-      count += 1 if @opposing_player.pieces.any? { |piece| piece.position ==  [i,y] }
-      break if count == 2
       @possible_moves << [i,y]
+      break if @opposing_player.pieces.any? { |piece| piece.position ==  [i,y] }
     end
 
-    count = 0
     for i in (y+1)..7
       break if @active_player.pieces.any? { |piece| piece.position ==  [x,i] }
-      count += 1 if @opposing_player.pieces.any? { |piece| piece.position ==  [x,i] }
-      break if count == 2
       @possible_moves << [x,i]
+      break if @opposing_player.pieces.any? { |piece| piece.position ==  [x,i] }
     end
 
-    count = 0
     for i in (y-1).downto(0)
       break if @active_player.pieces.any? { |piece| piece.position ==  [x,i] }
-      count += 1 if @opposing_player.pieces.any? { |piece| piece.position ==  [x,i] }
-      break if count == 2
       @possible_moves << [x,i]
+      break if @opposing_player.pieces.any? { |piece| piece.position ==  [x,i] }
     end
     @possible_moves
   end
@@ -209,49 +202,41 @@ class Bishop < Piece
     a = x + 1
     b = y + 1
 
-    count = 0
     for i in 0..7
       break unless (a+i).between?(0,7) && (b+i).between?(0,7)
       break if @active_player.pieces.any? { |piece| piece.position ==  [a+i,b+i] }
-      count += 1 if @opposing_player.pieces.any? { |piece| piece.position ==  [a+i,b+i] }
-      break if count == 2
       @possible_moves << [a+i,b+i]
+      break if @opposing_player.pieces.any? { |piece| piece.position ==  [a+i,b+i] }
     end
 
     a = x - 1
     b = y + 1
 
-    count = 0
     for i in 0..7
       break unless (a-i).between?(0,7) && (b+i).between?(0,7)
       break if @active_player.pieces.any? { |piece| piece.position ==  [a-i,b+i] }
-      count += 1 if @opposing_player.pieces.any? { |piece| piece.position ==  [a-i,b+i] }
-      break if count == 2
       @possible_moves << [a-i,b+i]
+      break if @opposing_player.pieces.any? { |piece| piece.position ==  [a-i,b+i] }
     end
 
     a = x + 1
     b = y - 1
 
-    count = 0
     for i in 0..7
       break unless (a+i).between?(0,7) && (b-i).between?(0,7)
       break if @active_player.pieces.any? { |piece| piece.position ==  [a+i,b-i] }
-      count += 1 if @opposing_player.pieces.any? { |piece| piece.position ==  [a+i,b-i] }
-      break if count == 2
       @possible_moves << [a+i,b-i]
+      break if @opposing_player.pieces.any? { |piece| piece.position ==  [a+i,b-i] }
     end
 
     a = x - 1
     b = y - 1
 
-    count = 0
     for i in 0..7
       break unless (a-i).between?(0,7) && (b-i).between?(0,7)
       break if @active_player.pieces.any? { |piece| piece.position ==  [a-i,b-i] }
-      count += 1 if @opposing_player.pieces.any? { |piece| piece.position ==  [a-i,b-i] }
-      break if count == 2
       @possible_moves << [a-i,b-i]
+      break if @opposing_player.pieces.any? { |piece| piece.position ==  [a-i,b-i] }
     end
 
     @possible_moves

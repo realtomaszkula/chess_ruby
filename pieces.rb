@@ -16,6 +16,10 @@ class Piece
     @opposing_player = opposing_player
   end
 
+  def empty_and_in_range?(a,b)
+    a.between?(0,7) && b.between?(0,7) && @active_player.pieces.none? { |piece| piece.position == [a,b] }
+  end
+
 end
 
 class Pawn < Piece
@@ -57,16 +61,25 @@ class Pawn < Piece
 
     case @color
     when :white
-      @possible_moves << [x+1, y]
-      @possible_moves << [x+2, y]   unless @moved
-      @possible_moves << [x+1, y+1] if @opposing_player.pieces.any? { |piece| piece.position == [x+1, y+1] }
-      @possible_moves << [x+1, y-1] if @opposing_player.pieces.any? { |piece| piece.position == [x+1, y-1] }
+      @possible_moves << [x+1, y]   if empty_square?(x+1,y)
+      @possible_moves << [x+2, y]   unless @moved && !empty_square?(x+1,y) && !empty_square?(x+2,y)
+      @possible_moves << [x+1, y+1] if occupied_by_enemy?(x+1, y+1)
+      @possible_moves << [x+1, y-1] if occupied_by_enemy?(x+1, y-1)
     when :black
-      @possible_moves << [x-1, y]
-      @possible_moves << [x-2, y]   unless @moved
-      @possible_moves << [x-1, y+1] if @opposing_player.pieces.any? { |piece| piece.position == [x-1, y+1] }
-      @possible_moves << [x-1, y-1] if @opposing_player.pieces.any? { |piece| piece.position == [x-1, y-1] }
+      @possible_moves << [x-1, y]   if empty_square?(x-1,y)
+      @possible_moves << [x-2, y]   unless @moved && !empty_square?(x-1,y) && !empty_square?(x-2,y)
+      @possible_moves << [x-1, y+1] if occupied_by_enemy?(x-1, y+1)
+      @possible_moves << [x-1, y-1] if occupied_by_enemy?(x-1, y-1)
     end
+  end
+
+  def occupied_by_enemy?(a,b)
+    @opposing_player.pieces.any? { |piece| piece.position == [a,b] }
+  end
+
+  def empty_square?(a,b)
+    all_pieces = @active_player.pieces + @opposing_player.pieces
+    all_pieces.none? { |piece| piece.position == [a,b] }
   end
 
   def pawn_promotion
@@ -280,10 +293,6 @@ class King < Piece
                 end
   end
 
-  def empty_and_in_range?(a,b)
-    a.between?(0,7) && b.between?(0,7) && @active_player.pieces.none? { |piece| piece.position == [a,b] }
-  end
-
   def find_possible_moves
     x, y = @position[0], @position[1]
     @possible_moves = []
@@ -299,8 +308,6 @@ class King < Piece
 
     @possible_moves
   end
-
-
 end
 
 

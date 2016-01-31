@@ -37,8 +37,8 @@ class Board
     @value[x][y] == " "
   end
 
-  def occupied_by_an_ally?(destination, active_player)
-    active_player.pieces.any? { |piece| piece.position == destination }
+  def occupied_by_an_enemy?(destination, opposing_player )
+    opposing_player.pieces.any? { |piece| piece.position == destination }
   end
 
 end

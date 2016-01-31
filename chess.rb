@@ -32,13 +32,11 @@ class Chess
       player_move
     end
 
-    if @board.empty_field?(@selected_destination)
-      @selected_figure.position = @selected_destination
-    elsif @board.occupied_by_an_ally?(@selected_destination, @active_player)
-      puts "Incorrect, try again (can't move to the field occupied by an ally)"; player_move
-    else
+    if @board.occupied_by_an_enemy?(@selected_destination, @opposing_player)
       @selected_figure.position = @selected_destination
       @opposing_player.kill_piece(@selected_destination)
+    else
+      @selected_figure.position = @selected_destination
     end
   end
 

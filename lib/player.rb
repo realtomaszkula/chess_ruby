@@ -36,17 +36,23 @@ class Player
 
   def castle(side)
     king = @pieces.find { |piece| piece.figure == :king }
+    king_index = @pieces.index(king)
+
     rook = @pieces.select { |piece| piece.figure == :rook }.find { |rook| rook.side == side }
+    rook_index = @pieces.index(rook)
+
 
     case side
-    when :queenside
+    when :king
       king.position[1] += 2
       rook.position[1] -= 2
-    when :kingside
+    when :queen
       king.position[1] -= 2
-      rook.position[1] += 3
+      rook.position[1] += 2
     end
 
+    @pieces[king_index] = king
+    @pieces[rook_index] = rook
   end
 
   def get_pieces

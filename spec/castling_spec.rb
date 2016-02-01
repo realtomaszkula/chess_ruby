@@ -46,10 +46,6 @@ describe Chess do
       end
     end
   end
-
-
-
-
 end
 
 describe Player do
@@ -63,11 +59,11 @@ describe Player do
       expect { player.castle(:king) }.to change{ king.position }.from([0,4]).to([0,6])
     end
 
-
     it do
       king = King.new(:white, [0,4])
       rook = Rook.new(:white, [0,7], :king)
       player.pieces = [ king, rook ]
+      p player.pieces
       expect { player.castle(:king) }.to change{ rook.position }.from([0,7]).to([0,5])
     end
   end

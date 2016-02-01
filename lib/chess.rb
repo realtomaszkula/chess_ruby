@@ -276,5 +276,5 @@ end
 
 
 
-# x = Chess.new
-# x.play
+ x = Chess.new
+ x.play

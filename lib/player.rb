@@ -1,6 +1,3 @@
-# require_relative './pieces.rb'
-# require_relative './chess.rb'
-
 class Player
   attr_reader :name, :color, :in_check
   attr_accessor :pieces

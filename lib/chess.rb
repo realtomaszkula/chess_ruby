@@ -27,7 +27,6 @@ class Chess
   end
 
   def temp_save
-    def save_the_game
     yaml_string = YAML::dump(self)
     File.open("./temp/save.txt", "w") do |f|
       f.puts yaml_string
@@ -53,7 +52,7 @@ class Chess
     input = input_move()
     @selected_position = split_and_convert(input[0])
     @selected_destination = split_and_convert(input[1])
-    @selected_figure = @active_player.pieces.select { |piece| piece.position == @selected_position }.first
+    @selected_figure = @active_player.pieces.find { |piece| piece.position == @selected_position }
 
     if @selected_figure == nil
       puts "Incorrect, try again (can only select your own figures)"
@@ -92,8 +91,8 @@ class Chess
 
   def capture_pawn
     case @active_player.color
-    when :white then captured_pawn = @opposing_player.pieces.find { |piece| piece.position == [@selected_destination[0] + 1, @selected_destination[1] }
-    when :black then captured_pawn = @opposing_player.pieces.find { |piece| piece.position == [@selected_destination[0] + 1, @selected_destination[1] }
+    when :white then captured_pawn = @opposing_player.pieces.find { |piece| piece.position == [@selected_destination[0] + 1, @selected_destination[1]] }
+    when :black then captured_pawn = @opposing_player.pieces.find { |piece| piece.position == [@selected_destination[0] + 1, @selected_destination[1]] }
     end
     @opposing_player.kill_piece(captured_pawn)
   end
@@ -221,7 +220,7 @@ class Chess
   end
 
   def castle
-    unless can_castle? puts "Incorrect! Can't castle!"; input_move
+    unless can_castle? puts "Incorrect! Can't castle!"; input_move end
 
     if @can_castle_both_ways
       puts 'Enter:\nKING - to castle kingside\nQUEEN - to castle queenside'
@@ -235,14 +234,14 @@ class Chess
   end
 
   def can_castle?
-    check? = @active_player.in_check?
-    king_moved? = @active_player.pieces.find { |piece| piece.figure == :king }.moved
+    check = @active_player.in_check?
+    king_moved = @active_player.pieces.find { |piece| piece.figure == :king }.moved
 
     @can_castle_queenside = queenside_space_empty? && !queenside_rook_moved?
     @can_castle_kingside = kingside_space_empty? && !kingside_rook_moved?
     @can_castle_both_ways = @can_castle_queenside && @can_castle_kingside
 
-    check? && !king_moved? && (@can_castle_queenside || @can_castle_kingside)
+    check && !king_moved && (@can_castle_queenside || @can_castle_kingside)
   end
 
   def queenside_space_empty?
@@ -274,6 +273,7 @@ class Chess
   end
 
 end
+
 
 
 # x = Chess.new

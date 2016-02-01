@@ -14,9 +14,38 @@ class Chess
   end
 
   def play
+    temp_save
     player_move
+    if @active_player.in_check?
+      load_temp
+      puts "This move would put you in check, try again!"
+      player_move
+    end
     impement_changes
     change_turn
+  end
+
+  def temp_save
+    def save_the_game
+    yaml_string = YAML::dump(self)
+    File.open("./temp/save.txt", "w") do |f|
+      f.puts yaml_string
+    end
+  end
+
+  def load_temp
+    yaml_string = File.open("./temp/save.txt","r") {|fname| fname.read}
+    x = YAML::load(yaml_string)
+  end
+
+  def check_if_in_check
+    king = @active_player.pieces.find { |piece| piece.figure == :king }
+    all_positions = @opposing_player.pieces.map { |piece| piece.find_possible_moves }.flatten
+    @active_player.in_check = true if all_positions.any? { |position| king.position == position }
+  end
+
+  def in_check?(plr)
+    plr.in_check == true
   end
 
   def player_move

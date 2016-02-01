@@ -88,8 +88,6 @@ class Pawn < Piece
     all_pieces.none? { |piece| piece.position == [a,b] }
   end
 
-  def en_passant
-  end
 end
 
 class Knight < Piece

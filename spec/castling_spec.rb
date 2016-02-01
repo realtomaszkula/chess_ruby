@@ -49,9 +49,11 @@ describe Chess do
 end
 
 describe Player do
-  context '#castle' do
+  describe '#castle' do
   let(:game) { Chess.new }
   let(:player) { game.plr1 }
+
+  context 'when kingside' do
     it do
       king = King.new(:white, [0,4])
       rook = Rook.new(:white, [0,7], :king)
@@ -63,8 +65,24 @@ describe Player do
       king = King.new(:white, [0,4])
       rook = Rook.new(:white, [0,7], :king)
       player.pieces = [ king, rook ]
-      p player.pieces
       expect { player.castle(:king) }.to change{ rook.position }.from([0,7]).to([0,5])
     end
+  end
+
+  context 'when queenside' do
+    it do
+      king = King.new(:white, [0,4])
+      rook = Rook.new(:white, [0,0], :queen)
+      player.pieces = [ king, rook ]
+      expect { player.castle(:queen) }.to change{ king.position }.from([0,4]).to([0,2])
+    end
+
+    it do
+      king = King.new(:white, [0,4])
+      rook = Rook.new(:white, [0,0], :queen)
+      player.pieces = [ king, rook ]
+      expect { player.castle(:queen) }.to change{ rook.position }.from([0,0]).to([0,3])
+    end
+  end
   end
 end

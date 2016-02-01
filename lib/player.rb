@@ -38,10 +38,10 @@ class Player
 
     case side
     when:king
-      @pieces.select { |piece| piece.figure == :rook }.find { |rook| rook.side == side }.position[1] -= 2
+      @pieces.select { |piece| piece.figure == :rook }.find { |rook| rook.side == :king }.position[1] -= 2
       @pieces.find { |piece| piece.figure == :king }.position[1] += 2
     when :queen
-      @pieces.select { |piece| piece.figure == :rook }.find { |rook| rook.side == side }.position[1] += 2
+      @pieces.select { |piece| piece.figure == :rook }.find { |rook| rook.side == :queen }.position[1] += 3
       @pieces.find { |piece| piece.figure == :king }.position[1] -= 2
     end
   end

@@ -10,7 +10,6 @@ module EnPassant
     @active_player.pieces.select { |piece| piece.figure == :pawn }.select { |pawn| !pawn.en_passant.empty? }.map! { |pawn| pawn.en_passant = [] }
   end
 
-
   def capture_pawn
     case @active_player.color
     when :white then captured_pawn = @opposing_player.pieces.find { |piece| piece.position == [@selected_destination[0] + 1, @selected_destination[1]] }

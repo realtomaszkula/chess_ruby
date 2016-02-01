@@ -115,7 +115,7 @@ class Knight < Piece
 end
 
 class Rook < Piece
-  attr_reader :color, :figure, :moved
+  attr_reader :color, :figure, :moved, :side
   attr_accessor :position, :possible_moves
 
   def initialize(color, position, side = nil)

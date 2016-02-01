@@ -33,7 +33,13 @@ describe Chess do
         update
         expect(game.can_castle?).to eql false
       end
-      it 'returns false wtih piece inbetween' do
+      it 'returns false with piece inbetween' do
+        active_player.pieces = [ King.new(:white, [0,4]), Pawn.new(:white, [0,5]), Rook.new(:white, [0,7], :king) ]
+        update
+        expect(game.can_castle?).to eql false
+      end
+      it 'returns false when king is in check' do
+        active_player.in_check = true
         active_player.pieces = [ King.new(:white, [0,4]), Pawn.new(:white, [0,5]), Rook.new(:white, [0,7], :king) ]
         update
         expect(game.can_castle?).to eql false

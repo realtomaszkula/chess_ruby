@@ -2,8 +2,8 @@ module Castling
   def can_castle?
     check = @active_player.in_check?
     king_moved = @active_player.pieces.find { |piece| piece.figure == :king }.moved
-    @can_castle_queenside = queenside_space_empty? && !queenside_rook_moved?
-    @can_castle_kingside = kingside_space_empty? && !kingside_rook_moved?
+    @can_castle_queenside = queenside_space_empty? && !queenside_rook_moved? && !kingside_under_attack
+    @can_castle_kingside = kingside_space_empty? && !kingside_rook_moved? && !queenside_under_attack
     @can_castle_both_ways = @can_castle_queenside && @can_castle_kingside
     !check && !king_moved && (@can_castle_queenside || @can_castle_kingside)
   end
@@ -43,10 +43,11 @@ module Castling
 
     case @active_player.color
     when :black
-      fields_under_attack.any? { |i| [[7,2], [7,3]].include? i }
+      @under_attack = fields_under_attack.any? { |i| [[7,2], [7,3]].include? i }
     when :white
-      fields_under_attack.any? { |i| [[0,2], [0,3]].include? i }
+      @under_attack = fields_under_attack.any? { |i| [[0,2], [0,3]].include? i }
     end
+    @under_attack
   end
 
   def queenside_under_attack
@@ -54,9 +55,10 @@ module Castling
 
     case @active_player.color
     when :black
-      fields_under_attack.any? { |i| [[7,5], [7,6]].include? i }
+      @under_attack = fields_under_attack.any? { |i| [[7,5], [7,6]].include? i }
     when :white
-      fields_under_attack.any? { |i| [[0,5], [0,6]].include? i }
+      @under_attack = fields_under_attack.any? { |i| [[0,5], [0,6]].include? i }
     end
+    @under_attack
   end
 end

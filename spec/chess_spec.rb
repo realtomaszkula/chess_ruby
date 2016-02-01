@@ -18,10 +18,6 @@ describe Chess do
         end
           it { expect{ @pawn.position=[2,1] }.to change{@pawn.position}.from([1,1]).to([2,1]) }
           it { expect{ @pawn.position=[2,1] }.to change{@pawn.moved}.from(false).to(true) }
-          it 'to another side of the board' do
-            expect(@pawn).to receive(:pawn_promotion).with(no_args)
-            @pawn.position=[7,1]
-          end
 
           it 'to a square occupied by an ally' do
             plr2.pieces = []

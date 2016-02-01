@@ -51,6 +51,7 @@ module Castling
   end
 
   def queenside_under_attack
+    @opposing_player.pieces.each { |piece| piece.receive_environment(@opposing_player, @active_player) }
     fields_under_attack = @opposing_player.pieces.collect { |piece| piece.find_possible_moves }.flatten
 
     case @active_player.color

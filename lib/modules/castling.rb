@@ -38,4 +38,25 @@ module Castling
     rook.moved
   end
 
+  def kingside_under_attack
+    fields_under_attack = @opposite_player.pieces.collect { |piece| piece.find_possible_moves }.flatten
+
+    case @active_player.color
+    when :black
+      fields_under_attack.any? { |i| [[7,2], [7,3]].include? i }
+    when :white
+      fields_under_attack.any? { |i| [[0,2], [0,3]].include? i }
+    end
+  end
+
+  def queenside_under_attack
+    fields_under_attack = @opposite_player.pieces.collect { |piece| piece.find_possible_moves }.flatten
+
+    case @active_player.color
+    when :black
+      fields_under_attack.any? { |i| [[7,5], [7,6]].include? i }
+    when :white
+      fields_under_attack.any? { |i| [[0,5], [0,6]].include? i }
+    end
+  end
 end

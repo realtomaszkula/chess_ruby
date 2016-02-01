@@ -22,7 +22,7 @@ end
 class Pawn < Piece
 
   attr_reader :color, :figure, :possible_moves, :moved
-  attr_accessor :position
+  attr_accessor :position , :en_passant, :promote
 
 
   def initialize(color, position)

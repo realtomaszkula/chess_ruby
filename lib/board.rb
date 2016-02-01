@@ -14,6 +14,7 @@ class Board
   end
 
   def draw
+    puts "\n\n"
     @value.reverse.each_with_index do |row, i|
       print "\t\t\t\t #{(i-8).abs}"
       row.each { |x| print "|#{x}" }

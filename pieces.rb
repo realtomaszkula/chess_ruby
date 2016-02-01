@@ -35,6 +35,7 @@ class Pawn < Piece
     @moved = false
     @promote_position = promote_position
     @promote = false
+    @en_passant = []
     @unicode = case @color
               when :white then "\u2659"
               when :black then "\u265F"
@@ -67,12 +68,15 @@ class Pawn < Piece
       @possible_moves << [x+2, y]   unless @moved || !empty_square?(x+1,y) || !empty_square?(x+2,y)
       @possible_moves << [x+1, y+1] if occupied_by_enemy?(x+1, y+1)
       @possible_moves << [x+1, y-1] if occupied_by_enemy?(x+1, y-1)
+      @possible_moves + @en_passant
     when :black
       @possible_moves << [x-1, y]   if empty_square?(x-1,y)
       @possible_moves << [x-2, y]   unless @moved || !empty_square?(x-1,y) || !empty_square?(x-2,y)
       @possible_moves << [x-1, y+1] if occupied_by_enemy?(x-1, y+1)
       @possible_moves << [x-1, y-1] if occupied_by_enemy?(x-1, y-1)
+      @possible_moves + @en_passant
     end
+    @en_passant = []
   end
 
   def occupied_by_enemy?(a,b)

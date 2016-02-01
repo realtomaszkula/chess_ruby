@@ -13,10 +13,6 @@ class Player
     @pieces.each {|piece| puts piece.inspect }
   end
 
-  def in_check?
-    @in_check == true
-  end
-
   def kill_piece(position)
     @pieces.select{ |piece| piece = piece unless piece.position == position }.map! { |piece| piece = piece }
   end
@@ -75,8 +71,9 @@ class Player
           @pieces << Knight.new( :black, [7,5])
           @pieces << Bishop.new( :black, [7,1])
           @pieces << Bishop.new( :black, [7,6])
+      end
     end
   end
 end
-
-
+end
+end

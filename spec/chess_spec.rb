@@ -1,4 +1,4 @@
-require_relative '../chess.rb'
+require_relative '../lib/chess.rb'
 
 describe Chess do
   let(:game) { Chess.new }

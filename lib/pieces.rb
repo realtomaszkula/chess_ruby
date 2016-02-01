@@ -1,7 +1,3 @@
-# require_relative './pieces.rb'
-# require_relative './chess.rb'
-require_relative './movement.rb'
-
 class Piece
   attr_reader :color, :figure, :unicode
   attr_accessor :position, :possible_moves

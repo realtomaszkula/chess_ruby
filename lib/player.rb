@@ -1,3 +1,6 @@
+# require_relative './pieces.rb'
+# require_relative './chess.rb'
+
 class Player
   attr_reader :name, :color, :in_check
   attr_accessor :pieces
@@ -11,6 +14,10 @@ class Player
 
   def show
     @pieces.each {|piece| puts piece.inspect }
+  end
+
+  def in_check?
+    @in_check == true
   end
 
   def kill_piece(position)

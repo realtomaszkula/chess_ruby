@@ -39,7 +39,7 @@ module Castling
   end
 
   def kingside_under_attack
-    fields_under_attack = @opposite_player.pieces.collect { |piece| piece.find_possible_moves }.flatten
+    fields_under_attack = @opposing_player.pieces.collect { |piece| piece.find_possible_moves }.flatten
 
     case @active_player.color
     when :black
@@ -51,7 +51,7 @@ module Castling
   end
 
   def queenside_under_attack
-    fields_under_attack = @opposite_player.pieces.collect { |piece| piece.find_possible_moves }.flatten
+    fields_under_attack = @opposing_player.pieces.collect { |piece| piece.find_possible_moves }.flatten
 
     case @active_player.color
     when :black

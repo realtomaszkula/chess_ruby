@@ -38,18 +38,4 @@ module Castling
     rook.moved
   end
 
-  def castle
-    unless can_castle? then puts "Incorrect! Can't castle!"; input_move end
-    if @can_castle_both_ways
-      puts 'Enter:\nKING - to castle kingside\nQUEEN - to castle queenside'
-      case input = gets.chomp
-      when 'QUEEN'  then @active_player.castle(:queenside)
-      when 'KNIGHT' then @active_player.castle(:kingside)
-      end
-    elsif @can_castle_queenside then @active_player.castle(:queenside)
-    elsif @can_castle_kingside then @active_player.castle(:kingside)
-    end
-  end
-
-
 end

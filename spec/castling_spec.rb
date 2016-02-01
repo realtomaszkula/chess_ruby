@@ -5,8 +5,8 @@ describe Chess do
   let(:game) { Chess.new }
   let(:plr1) { game.plr1 }
   let(:plr2) { game.plr2 }
-  let(:active_player) {game.active_player}
-  let(:update) {game.implement_changes}
+  let(:active_player) { game.active_player }
+  let(:update) { game.implement_changes }
 
   describe '#can_castle?' do
     it 'returns false when the game starts' do
@@ -45,7 +45,30 @@ describe Chess do
         expect(game.can_castle?).to eql false
       end
     end
-
   end
 
+
+
+
+end
+
+describe Player do
+  context '#castle' do
+  let(:game) { Chess.new }
+  let(:player) { game.plr1 }
+    it do
+      king = King.new(:white, [0,4])
+      rook = Rook.new(:white, [0,7], :king)
+      player.pieces = [ king, rook ]
+      expect { player.castle(:king) }.to change{ king.position }.from([0,4]).to([0,6])
+    end
+
+
+    it do
+      king = King.new(:white, [0,4])
+      rook = Rook.new(:white, [0,7], :king)
+      player.pieces = [ king, rook ]
+      expect { player.castle(:king) }.to change{ rook.position }.from([0,7]).to([0,5])
+    end
+  end
 end

@@ -59,6 +59,21 @@ describe Chess do
     end
   end
 
+  describe '#captured_en_passant?' do
+    it 'returns false when moving non pawn figure' do
+        queen = Queen.new(:white, [1,0])
+        game.instance_variable_set(:@selected_figure, queen)
+        expect(game.captured_en_passant?).to eql false
+    end
+    it 'returns true when movingto en_passant position' do
+        pawn = Pawn.new(:white, [1,0])
+        pawn.en_passant = [3,0]
+        game.instance_variable_set(:@selected_figure, pawn)
+        game.instance_variable_set(:@selected_destination, [3,0])
+        expect(game.captured_en_passant?).to eql true
+    end
+  end
+
 end
 
 end

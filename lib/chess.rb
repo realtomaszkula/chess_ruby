@@ -24,11 +24,11 @@ class Chess
   def play
     loop do
       temp_save
-      player_move
-      if @active_player.in_check?
+      player_move until player_move
+      if check_if_in_check
         load_temp
-        puts "This move would put you in check, try again!"
-        player_move
+        puts "You are in check"
+        next
       end
       implement_changes
       change_turn
@@ -52,15 +52,18 @@ class Chess
 
     if @selected_figure == nil
       puts "Incorrect, try again (can only select your own figures)"
-      player_move
+      return false
     end
 
     @selected_figure.receive_environment(@active_player, @opposing_player)
     @selected_figure.find_possible_moves
 
+    p @selected_destination
+    p @selected_figure.find_possible_moves
+
     unless @selected_figure.possible_moves.include?(@selected_destination)
       puts "Incorrect, try again (movement outside of possible moves for this figure)"
-      player_move
+      return false
     end
 
     if @board.occupied_by_an_enemy?(@selected_destination, @opposing_player)
@@ -72,10 +75,13 @@ class Chess
 
     en_passant_mechanics
     promote if pawn_promotion
+    true
   end
 
   def input_move
+    return if @active_player.castled == true
     puts "\n\t\t\t\t:#{@active_player.color}_player, enter your move"
+    input = ""
     input = gets.chomp.upcase
     until (input.size == 5             &&
           input[2]     == " "          &&
@@ -88,8 +94,8 @@ class Chess
     end
 
     case input
-    when 'SAVE' then save_the_game; input_move
-    when 'CASTLE' then castle
+    when 'SAVE' then save_the_game; ## need to rework this
+    when 'CASTLE' then castle;
     else input = input.split
     end  ## ["A1" "A2"]
   end
@@ -103,8 +109,10 @@ class Chess
 
   def check_if_in_check
     king = @active_player.pieces.find { |piece| piece.figure == :king }
-    all_positions = @opposing_player.pieces.map { |piece| piece.find_possible_moves }.flatten
-    @active_player.in_check = true if all_positions.any? { |position| king.position == position }
+    @opposing_player.pieces.each { |piece| piece.receive_environment(@opposing_player, @active_player)  }
+    all_positions =  @opposing_player.pieces.map { |piece| piece.find_possible_moves }.flatten(1)
+    @active_player.in_check = all_positions.any? { |position| king.position == position } ? true : false
+    @active_player.in_check?
   end
 
   def in_check?(plr)

@@ -64,14 +64,13 @@ class Pawn < Piece
       @possible_moves << [x+2, y]   unless @moved || !empty_square?(x+1,y) || !empty_square?(x+2,y)
       @possible_moves << [x+1, y+1] if occupied_by_enemy?(x+1, y+1)
       @possible_moves << [x+1, y-1] if occupied_by_enemy?(x+1, y-1)
-      @possible_moves << @en_passant.first
     when :black
       @possible_moves << [x-1, y]   if empty_square?(x-1,y)
       @possible_moves << [x-2, y]   unless @moved || !empty_square?(x-1,y) || !empty_square?(x-2,y)
       @possible_moves << [x-1, y+1] if occupied_by_enemy?(x-1, y+1)
       @possible_moves << [x-1, y-1] if occupied_by_enemy?(x-1, y-1)
-      @possible_moves << @en_passant.first
     end
+    @possible_moves << @en_passant.first if @en_passant.first != nil
     @possible_moves
   end
 
@@ -110,7 +109,7 @@ class Knight < Piece
       a = x + -2; b = y + -1; @possible_moves << [a,b]  if empty_and_in_range?(a,b)
       a = x + -1; b = y +  2; @possible_moves << [a,b]  if empty_and_in_range?(a,b)
       a = x + -2; b = y +  1; @possible_moves << [a,b]  if empty_and_in_range?(a,b)
-      @possible_move
+      @possible_moves
   end
 end
 

@@ -17,10 +17,6 @@ class Piece
     a.between?(0,7) && b.between?(0,7) && @active_player.pieces.none? { |piece| piece.position == [a,b] }
   end
 
-  def occupied_by_ally?(a,b)
-    @active_player.pieces.any? { |piece| piece.position == [a,b] }
-  end
-
 end
 
 class Pawn < Piece
@@ -107,14 +103,14 @@ class Knight < Piece
   def find_possible_moves
     x, y = @position[0], @position[1]
     @possible_moves = []
-      a = x +  1; b = y + -2; @possible_moves << [a,b]  if a.between?(0,7) && b.between?(0,7) && !occupied_by_ally?(a,b)
-      a = x +  2; b = y + -1; @possible_moves << [a,b]  if a.between?(0,7) && b.between?(0,7) && !occupied_by_ally?(a,b)
-      a = x +  1; b = y +  2; @possible_moves << [a,b]  if a.between?(0,7) && b.between?(0,7) && !occupied_by_ally?(a,b)
-      a = x +  2; b = y +  1; @possible_moves << [a,b]  if a.between?(0,7) && b.between?(0,7) && !occupied_by_ally?(a,b)
-      a = x + -1; b = y + -2; @possible_moves << [a,b]  if a.between?(0,7) && b.between?(0,7) && !occupied_by_ally?(a,b)
-      a = x + -2; b = y + -1; @possible_moves << [a,b]  if a.between?(0,7) && b.between?(0,7) && !occupied_by_ally?(a,b)
-      a = x + -1; b = y +  2; @possible_moves << [a,b]  if a.between?(0,7) && b.between?(0,7) && !occupied_by_ally?(a,b)
-      a = x + -2; b = y +  1; @possible_moves << [a,b]  if a.between?(0,7) && b.between?(0,7) && !occupied_by_ally?(a,b)
+      a = x +  1; b = y + -2; @possible_moves << [a,b]  if empty_and_in_range?(a,b)
+      a = x +  2; b = y + -1; @possible_moves << [a,b]  if empty_and_in_range?(a,b)
+      a = x +  1; b = y +  2; @possible_moves << [a,b]  if empty_and_in_range?(a,b)
+      a = x +  2; b = y +  1; @possible_moves << [a,b]  if empty_and_in_range?(a,b)
+      a = x + -1; b = y + -2; @possible_moves << [a,b]  if empty_and_in_range?(a,b)
+      a = x + -2; b = y + -1; @possible_moves << [a,b]  if empty_and_in_range?(a,b)
+      a = x + -1; b = y +  2; @possible_moves << [a,b]  if empty_and_in_range?(a,b)
+      a = x + -2; b = y +  1; @possible_moves << [a,b]  if empty_and_in_range?(a,b)
       @possible_move
   end
 end

@@ -107,6 +107,45 @@ describe Chess do
             knight = Knight.new(:white, [7,4])
             expect{ knight.find_possible_moves }.to change{ knight.possible_moves.size }.from(0).to(4)
           end
+        end
+
+       context 'when finding possible moves, reacts to the presence of ally pieces' do
+          it 'two deep bottom' do
+            plr2.pieces = []
+            rook = Knight.new(:white, [3,3])
+            expect{ rook.find_possible_moves }.to change{ rook.possible_moves.size }.from(0).to(6)
+          end
+          it 'two bottom' do
+            plr2.pieces = []
+            rook = Knight.new(:white, [2,3])
+            expect{ rook.find_possible_moves }.to change{ rook.possible_moves.size }.from(0).to(4)
+          end
+          it do 'upper left deep'
+            plr2.pieces = []
+            rook = Knight.new(:white, [2,3])
+            plr1.pieces << Bishop.new(:white, [3,1])
+            expect{ rook.find_possible_moves }.to change{ rook.possible_moves.size }.from(0).to(3)
+          end
+
+          it do 'upper left'
+            plr2.pieces = []
+            rook = Knight.new(:white, [2,3])
+            plr1.pieces << Bishop.new(:white, [3,1]) << Bishop.new(:white, [4,2])
+            expect{ rook.find_possible_moves }.to change{ rook.possible_moves.size }.from(0).to(2)
+          end
+          it 'upper right' do
+            plr2.pieces = []
+            rook = Knight.new(:white, [2,3])
+            plr1.pieces << Bishop.new(:white, [3,1]) << Bishop.new(:white, [4,2]) << Bishop.new(:white, [4,4])
+            expect{ rook.find_possible_moves }.to change{ rook.possible_moves.size }.from(0).to(1)
+          end
+
+          it 'upper right deep' do
+            plr2.pieces = []
+            rook = Knight.new(:white, [2,3])
+            plr1.pieces << Bishop.new(:white, [3,1]) << Bishop.new(:white, [4,2]) << Bishop.new(:white, [4,4]) << Bishop.new(:white, [3,5])
+            expect{ rook.find_possible_moves }.to change{ rook.possible_moves.size }.from(0).to(0)
+          end
 
       end
     end

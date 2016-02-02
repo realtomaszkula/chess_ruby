@@ -73,6 +73,7 @@ class Pawn < Piece
       @possible_moves + @en_passant
     end
     @en_passant = []
+    @possible_moves
   end
 
   def occupied_by_enemy?(a,b)

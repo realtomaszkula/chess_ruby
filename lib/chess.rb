@@ -12,7 +12,7 @@ class Chess
   include EnPassant
   include PawnPromotion
 
-  attr_accessor :plr1, :plr2, :board, :active_player
+  attr_accessor :plr1, :plr2, :board, :active_player, :opposing_player
   def initialize
     create_players
     create_clear_board
@@ -39,7 +39,7 @@ class Chess
     collect_all_pieces
     create_clear_board
     update_board
-    # draw_board
+    draw_board
   end
 
   def player_move

@@ -6,6 +6,7 @@ describe Chess do
   let(:plr1) { game.plr1 }
   let(:plr2) { game.plr2 }
   let(:active_player) { game.active_player }
+  let(:opposing_player) { game.opposing_player }
   let(:update) { game.implement_changes }
 
   describe '#can_castle?' do
@@ -43,6 +44,20 @@ describe Chess do
         active_player.pieces = [ King.new(:white, [0,4]), Pawn.new(:white, [0,5]), Rook.new(:white, [0,7], :king) ]
         update
         expect(game.can_castle?).to eql false
+      end
+
+      it 'returns false when kingside is under attack' do
+        active_player.pieces = [ King.new(:white, [0,4]), Rook.new(:white, [0,7], :king) ]
+        opposing_player.pieces = [ Pawn.new(:black, [1,6]) ]
+
+        update
+        expect(game.can_castle?).to eql false
+      end
+
+      it 'returns false when queenside is under attack' do
+      end
+
+      it 'returns true when queenside rook is under attack on ' do
       end
     end
   end

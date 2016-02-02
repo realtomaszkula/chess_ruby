@@ -55,6 +55,11 @@ describe Chess do
       end
 
       it 'returns false when queenside is under attack' do
+        active_player.pieces = [ King.new(:white, [0,4]), Rook.new(:white, [0,7], :king) ]
+        opposing_player.pieces = [ Pawn.new(:black, [1,3]) ]
+
+        update
+        expect(game.can_castle?).to eql false
       end
 
       it 'returns true when queenside rook is under attack on ' do

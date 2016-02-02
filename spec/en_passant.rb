@@ -6,7 +6,7 @@ describe Chess do
   let(:plr2) { game.plr2 }
 
   describe '#mark_enemy_passant' do
-  context 'when white plr moves' do
+  context 'when white player moves' do
     before do
       game.instance_variable_set(:@selected_destination, [3,0])
       plr2.pieces = []
@@ -19,7 +19,7 @@ describe Chess do
     }
   end
 
-  context 'when black plr moves' do
+  context 'when black player moves' do
     before do
       game.instance_variable_set(:@selected_destination, [5,0])
       game.instance_variable_set(:@active_player, plr2)
@@ -33,6 +33,32 @@ describe Chess do
     expect { game.mark_enemy_passant }.to change { pawn.en_passant }.from([]).to([[6,0]])
     }
   end
+
+  describe '#en_passant?' do
+    context 'when white player moves' do
+      before do
+        @pawn = Pawn.new(:white, [1,0])
+        game.instance_variable_set(:@selected_position, [1,0])
+        game.instance_variable_set(:@selected_destination, [3,0])
+        game.instance_variable_set(:@selected_figure, @pawn)
+      end
+      it 'returns false when moving two steps forward' do
+        expect(game.en_passant?).to eql true
+      end
+    end
+    context 'when black player moves' do
+      before do
+        @pawn = Pawn.new(:black, [6,0])
+        game.instance_variable_set(:@selected_position, [6,0])
+        game.instance_variable_set(:@selected_destination, [4,0])
+        game.instance_variable_set(:@selected_figure, @pawn)
+      end
+      it 'returns false when moving two steps forward' do
+        expect(game.en_passant?).to eql true
+      end
+    end
+  end
+
 end
 
 end

@@ -70,81 +70,109 @@ describe Chess do
     end
 
     describe Knight do
-      context 'when moving' do
-          it do
+      context 'when moving on empty board' do
+        before do
+            plr1.pieces = []
+            plr2.pieces = []
+        end
+          it 'middle' do
             knight = Knight.new(:white, [4,4])
+            plr1.pieces << knight
+            knight.receive_environment(plr1, plr2)
             expect{ knight.find_possible_moves }.to change{ knight.possible_moves.size }.from(0).to(8)
           end
-          it do
+          it 'middle left' do
+            knight = Knight.new(:white, [7,4])
+            plr1.pieces << knight
+            knight.receive_environment(plr1, plr2)
+            expect{ knight.find_possible_moves }.to change{ knight.possible_moves.size }.from(0).to(4)
+          end
+          it 'middle bottom' do
+            knight = Knight.new(:white, [0,4])
+            plr1.pieces << knight
+            knight.receive_environment(plr1, plr2)
+            expect{ knight.find_possible_moves }.to change{ knight.possible_moves.size }.from(0).to(4)
+          end
+          it 'middle right' do
+            knight = Knight.new(:white, [4,7])
+            plr1.pieces << knight
+            knight.receive_environment(plr1, plr2)
+            expect{ knight.find_possible_moves }.to change{ knight.possible_moves.size }.from(0).to(4)
+          end
+          it 'top right' do
+            knight = Knight.new(:white, [7,4])
+            plr1.pieces << knight
+            knight.receive_environment(plr1, plr2)
+            expect{ knight.find_possible_moves }.to change{ knight.possible_moves.size }.from(0).to(4)
+          end
+          it 'bottom left corner' do
             knight = Knight.new(:white, [0,0])
+            plr1.pieces << knight
+            knight.receive_environment(plr1, plr2)
             expect{ knight.find_possible_moves }.to change{ knight.possible_moves.size }.from(0).to(2)
           end
-          it do
+          it 'top right corner' do
             knight = Knight.new(:white, [7,7])
+            plr1.pieces << knight
+            knight.receive_environment(plr1, plr2)
             expect{ knight.find_possible_moves }.to change{ knight.possible_moves.size }.from(0).to(2)
           end
-          it do
+          it 'bottom right corner' do
             knight = Knight.new(:white, [0,7])
+            plr1.pieces << knight
+            knight.receive_environment(plr1, plr2)
             expect{ knight.find_possible_moves }.to change{ knight.possible_moves.size }.from(0).to(2)
           end
-          it do
+          it 'top left corner' do
             knight = Knight.new(:white, [7,0])
+            plr1.pieces << knight
+            knight.receive_environment(plr1, plr2)
             expect{ knight.find_possible_moves }.to change{ knight.possible_moves.size }.from(0).to(2)
-          end
-          it do
-            knight = Knight.new(:white, [0,4])
-            expect{ knight.find_possible_moves }.to change{ knight.possible_moves.size }.from(0).to(4)
-          end
-          it do
-            knight = Knight.new(:white, [0,4])
-            expect{ knight.find_possible_moves }.to change{ knight.possible_moves.size }.from(0).to(4)
-          end
-          it do
-            knight = Knight.new(:white, [7,4])
-            expect{ knight.find_possible_moves }.to change{ knight.possible_moves.size }.from(0).to(4)
-          end
-          it do
-            knight = Knight.new(:white, [7,4])
-            expect{ knight.find_possible_moves }.to change{ knight.possible_moves.size }.from(0).to(4)
           end
         end
 
        context 'when finding possible moves, reacts to the presence of ally pieces' do
           it 'two deep bottom' do
             plr2.pieces = []
-            rook = Knight.new(:white, [3,3])
-            expect{ rook.find_possible_moves }.to change{ rook.possible_moves.size }.from(0).to(6)
+            knight = Knight.new(:white, [3,3])
+            knight.receive_environment(plr1, plr2)
+            expect{ knight.find_possible_moves }.to change{ knight.possible_moves.size }.from(0).to(6)
           end
           it 'two bottom' do
             plr2.pieces = []
-            rook = Knight.new(:white, [2,3])
-            expect{ rook.find_possible_moves }.to change{ rook.possible_moves.size }.from(0).to(4)
+            knight = Knight.new(:white, [2,3])
+            knight.receive_environment(plr1, plr2)
+            expect{ knight.find_possible_moves }.to change{ knight.possible_moves.size }.from(0).to(4)
           end
           it do 'upper left deep'
             plr2.pieces = []
-            rook = Knight.new(:white, [2,3])
+            knight = Knight.new(:white, [2,3])
             plr1.pieces << Bishop.new(:white, [3,1])
-            expect{ rook.find_possible_moves }.to change{ rook.possible_moves.size }.from(0).to(3)
+            knight.receive_environment(plr1, plr2)
+            expect{ knight.find_possible_moves }.to change{ knight.possible_moves.size }.from(0).to(3)
           end
 
           it do 'upper left'
             plr2.pieces = []
-            rook = Knight.new(:white, [2,3])
+            knight = Knight.new(:white, [2,3])
             plr1.pieces << Bishop.new(:white, [3,1]) << Bishop.new(:white, [4,2])
-            expect{ rook.find_possible_moves }.to change{ rook.possible_moves.size }.from(0).to(2)
+            knight.receive_environment(plr1, plr2)
+            expect{ knight.find_possible_moves }.to change{ knight.possible_moves.size }.from(0).to(2)
           end
           it 'upper right' do
             plr2.pieces = []
-            rook = Knight.new(:white, [2,3])
+            knight = Knight.new(:white, [2,3])
             plr1.pieces << Bishop.new(:white, [3,1]) << Bishop.new(:white, [4,2]) << Bishop.new(:white, [4,4])
-            expect{ rook.find_possible_moves }.to change{ rook.possible_moves.size }.from(0).to(1)
+            knight.receive_environment(plr1, plr2)
+            expect{ knight.find_possible_moves }.to change{ knight.possible_moves.size }.from(0).to(1)
           end
 
           it 'upper right deep' do
             plr2.pieces = []
-            rook = Knight.new(:white, [2,3])
+            knight = Knight.new(:white, [2,3])
             plr1.pieces << Bishop.new(:white, [3,1]) << Bishop.new(:white, [4,2]) << Bishop.new(:white, [4,4]) << Bishop.new(:white, [3,5])
-            expect{ rook.find_possible_moves }.to change{ rook.possible_moves.size }.from(0).to(0)
+            knight.receive_environment(plr1, plr2)
+            expect{ knight.find_possible_moves }.to_not change{ knight.possible_moves.size }
           end
 
       end

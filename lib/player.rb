@@ -18,7 +18,7 @@ class Player
   end
 
   def kill_piece(position)
-    @pieces.select{ |piece| piece = piece unless piece.position == position }.map! { |piece| piece = piece }
+      @pieces = @pieces.reject{ |piece| piece.position == position }
   end
 
   def promote_to(figure)
@@ -27,10 +27,10 @@ class Player
     kill_piece(position)
 
     case figure
-    when :queen   then Queen.new(@color, position)
-    when :rook    then Rook.new(@color, position)
-    when :knight  then Knight.new(@color, position)
-    when :bishop  then Bishop.new(@color,position)
+    when :queen   then  @pieces << Queen.new(@color, position)
+    when :rook    then  @pieces << Rook.new(@color, position)
+    when :knight  then  @pieces << Knight.new(@color, position)
+    when :bishop  then  @pieces << Bishop.new(@color,position)
     end
   end
 

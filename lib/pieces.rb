@@ -119,10 +119,10 @@ class Rook < Piece
   attr_reader :color, :figure, :moved, :side
   attr_accessor :position, :possible_moves
 
-  def initialize(color, position, side = nil)
+  def initialize(color, position, side = nil, moved = false)
     super(color, position)
     @figure = :rook
-    @moved = false
+    @moved = moved
     @side = side
     @unicode =  case @color
                 when :white then "\u2656"

@@ -18,11 +18,11 @@ class Chess
     create_clear_board
     @active_player = @plr1
     @opposing_player = @plr2
-    implement_changes
   end
 
   def play
     loop do
+      implement_changes
       temp_save
       until player_move do
         puts "\e[H\e[2J"
@@ -51,7 +51,7 @@ class Chess
   def player_move
     @active_player.castled = false
     input = input_move()
-    return if @active_player.castled == true
+    return true if @active_player.castled == true
     @selected_position = split_and_convert(input[0])
     @selected_destination = split_and_convert(input[1])
     @selected_figure = @active_player.pieces.find { |piece| piece.position == @selected_position }
@@ -87,7 +87,7 @@ class Chess
           input[0].ord.between?(65,72) &&
           input[3].ord.between?(65,72) &&
           input[1].to_i.between?(1,8)  &&
-          input[4].to_i.between?(1,8)) || input == 'SAVE' || input == 'CASTLE'
+          input[4].to_i.between?(1,8)) || input == 'SAVE' || input == 'CASTLE' || input == 'LOAD'
         puts "\e[H\e[2J";  draw_board
         print "\n\t\t\t\tIncorrect, try again\n\n\t\t\t\t"
         input = gets.chomp.upcase
@@ -96,6 +96,7 @@ class Chess
     case input
     when 'SAVE' then save_the_game; input_move ## need to rework this
     when 'CASTLE' then castle; input_move
+    when 'LOAD' then load_the_game
     else input = input.split
     end  ## ["A1" "A2"]
   end
@@ -159,7 +160,8 @@ class Chess
 
   def load_the_game
     yaml_string = File.open("./saves/save.txt","r") {|fname| fname.read}
-    x = YAML::load(yaml_string)
+    game = YAML::load(yaml_string)
+    game.play
   end
 
   def temp_save
@@ -179,11 +181,11 @@ class Chess
     if @can_castle_both_ways
       puts 'Enter:\nKING - to castle kingside\nQUEEN - to castle queenside'
       case input = gets.chomp
-      when 'QUEEN'  then @active_player.castle(:queenside)
-      when 'KNIGHT' then @active_player.castle(:kingside)
+      when 'QUEEN'  then @active_player.castle(:queen)
+      when 'KNIGHT' then @active_player.castle(:king)
       end
-    elsif @can_castle_queenside then @active_player.castle(:queenside)
-    elsif @can_castle_kingside then @active_player.castle(:kingside)
+    elsif @can_castle_queenside then @active_player.castle(:queen)
+    elsif @can_castle_kingside then @active_player.castle(:king)
     end
     @active_player.castled = true
   end

@@ -5,13 +5,11 @@ plr1: &1 !ruby/object:Player
   pieces:
   - &3 !ruby/object:Pawn
     color: :white
-    position: &35
+    position:
     - 3
     - 0
     possible_moves:
-    - - 2
-      - 0
-    - - 3
+    - - 4
       - 0
     figure: :pawn
     moved: true
@@ -178,16 +176,14 @@ plr1: &1 !ruby/object:Player
         opposing_player: *1
       - &23 !ruby/object:Pawn
         color: :black
-        position:
-        - 6
+        position: &35
+        - 4
         - 4
         possible_moves:
-        - - 5
-          - 4
-        - - 4
+        - - 3
           - 4
         figure: :pawn
-        moved: false
+        moved: true
         promote_position:
         - - 0
           - 0
@@ -213,15 +209,13 @@ plr1: &1 !ruby/object:Player
       - &24 !ruby/object:Pawn
         color: :black
         position:
-        - 6
+        - 4
         - 5
         possible_moves:
-        - - 5
-          - 5
-        - - 4
+        - - 3
           - 5
         figure: :pawn
-        moved: false
+        moved: true
         promote_position:
         - - 0
           - 0
@@ -247,15 +241,13 @@ plr1: &1 !ruby/object:Player
       - &25 !ruby/object:Pawn
         color: :black
         position:
-        - 6
+        - 4
         - 6
         possible_moves:
-        - - 5
-          - 6
-        - - 4
+        - - 3
           - 6
         figure: :pawn
-        moved: false
+        moved: true
         promote_position:
         - - 0
           - 0
@@ -281,15 +273,13 @@ plr1: &1 !ruby/object:Player
       - &26 !ruby/object:Pawn
         color: :black
         position:
-        - 6
+        - 4
         - 7
         possible_moves:
-        - - 5
-          - 7
-        - - 4
+        - - 3
           - 7
         figure: :pawn
-        moved: false
+        moved: true
         promote_position:
         - - 0
           - 0
@@ -329,7 +319,11 @@ plr1: &1 !ruby/object:Player
         position:
         - 7
         - 7
-        possible_moves: []
+        possible_moves:
+        - - 6
+          - 7
+        - - 5
+          - 7
         figure: :rook
         moved: false
         side: :king
@@ -341,7 +335,11 @@ plr1: &1 !ruby/object:Player
         position:
         - 7
         - 4
-        possible_moves: []
+        possible_moves:
+        - - 6
+          - 4
+        - - 6
+          - 5
         figure: :king
         moved: false
         unicode: "♚"
@@ -352,7 +350,11 @@ plr1: &1 !ruby/object:Player
         position:
         - 7
         - 3
-        possible_moves: []
+        possible_moves:
+        - - 6
+          - 4
+        - - 5
+          - 5
         figure: :queen
         unicode: "♛"
         active_player: *2
@@ -365,6 +367,8 @@ plr1: &1 !ruby/object:Player
         possible_moves:
         - - 5
           - 1
+        - - 6
+          - 4
         - - 5
           - 3
         figure: :knight
@@ -379,6 +383,8 @@ plr1: &1 !ruby/object:Player
         possible_moves:
         - - 5
           - 4
+        - - 6
+          - 7
         - - 5
           - 6
         figure: :knight
@@ -400,7 +406,21 @@ plr1: &1 !ruby/object:Player
         position:
         - 7
         - 6
-        possible_moves: []
+        possible_moves:
+        - - 6
+          - 7
+        - - 6
+          - 5
+        - - 5
+          - 4
+        - - 4
+          - 3
+        - - 3
+          - 2
+        - - 2
+          - 1
+        - - 1
+          - 0
         figure: :bishop
         unicode: "♝"
         active_player: *2
@@ -412,7 +432,11 @@ plr1: &1 !ruby/object:Player
     position:
     - 1
     - 1
-    possible_moves: []
+    possible_moves:
+    - - 2
+      - 1
+    - - 3
+      - 1
     figure: :pawn
     moved: false
     promote_position:
@@ -435,12 +459,18 @@ plr1: &1 !ruby/object:Player
     promote: false
     en_passant: []
     unicode: "♙"
+    active_player: *1
+    opposing_player: *2
   - &5 !ruby/object:Pawn
     color: :white
     position:
     - 1
     - 2
-    possible_moves: []
+    possible_moves:
+    - - 2
+      - 2
+    - - 3
+      - 2
     figure: :pawn
     moved: false
     promote_position:
@@ -463,12 +493,18 @@ plr1: &1 !ruby/object:Player
     promote: false
     en_passant: []
     unicode: "♙"
+    active_player: *1
+    opposing_player: *2
   - &6 !ruby/object:Pawn
     color: :white
     position:
     - 1
     - 3
-    possible_moves: []
+    possible_moves:
+    - - 2
+      - 3
+    - - 3
+      - 3
     figure: :pawn
     moved: false
     promote_position:
@@ -491,6 +527,8 @@ plr1: &1 !ruby/object:Player
     promote: false
     en_passant: []
     unicode: "♙"
+    active_player: *1
+    opposing_player: *2
   - &7 !ruby/object:Pawn
     color: :white
     position:
@@ -519,14 +557,18 @@ plr1: &1 !ruby/object:Player
     promote: false
     en_passant: []
     unicode: "♙"
+    active_player: *1
+    opposing_player: *2
   - &8 !ruby/object:Pawn
     color: :white
     position:
-    - 1
+    - 2
     - 5
-    possible_moves: []
+    possible_moves:
+    - - 3
+      - 5
     figure: :pawn
-    moved: false
+    moved: true
     promote_position:
     - - 7
       - 0
@@ -547,6 +589,8 @@ plr1: &1 !ruby/object:Player
     promote: false
     en_passant: []
     unicode: "♙"
+    active_player: *1
+    opposing_player: *2
   - &9 !ruby/object:Pawn
     color: :white
     position:
@@ -575,12 +619,18 @@ plr1: &1 !ruby/object:Player
     promote: false
     en_passant: []
     unicode: "♙"
+    active_player: *1
+    opposing_player: *2
   - &10 !ruby/object:Pawn
     color: :white
     position:
     - 1
     - 7
-    possible_moves: []
+    possible_moves:
+    - - 2
+      - 7
+    - - 3
+      - 7
     figure: :pawn
     moved: false
     promote_position:
@@ -603,58 +653,112 @@ plr1: &1 !ruby/object:Player
     promote: false
     en_passant: []
     unicode: "♙"
+    active_player: *1
+    opposing_player: *2
   - &11 !ruby/object:Rook
     color: :white
     position:
     - 0
     - 0
-    possible_moves: []
+    possible_moves:
+    - - 1
+      - 0
+    - - 2
+      - 0
     figure: :rook
     moved: false
     side: :queen
     unicode: "♖"
+    active_player: *1
+    opposing_player: *2
   - &12 !ruby/object:Rook
     color: :white
     position:
     - 0
-    - 7
-    possible_moves: []
+    - 5
+    possible_moves:
+    - - 0
+      - 6
+    - - 0
+      - 5
     figure: :rook
     moved: false
     side: :king
     unicode: "♖"
+    active_player: *1
+    opposing_player: *2
   - &13 !ruby/object:Bishop
     color: :white
     position:
-    - 0
-    - 6
-    possible_moves: []
+    - 2
+    - 4
+    possible_moves:
+    - - 3
+      - 5
+    - - 4
+      - 6
+    - - 1
+      - 5
+    - - 0
+      - 6
+    - - 3
+      - 3
+    - - 4
+      - 2
+    - - 5
+      - 1
+    - - 6
+      - 0
     figure: :bishop
     unicode: "♗"
+    active_player: *1
+    opposing_player: *2
   - &14 !ruby/object:Bishop
     color: :white
     position:
     - 0
     - 1
-    possible_moves: []
+    possible_moves:
+    - - 1
+      - 0
     figure: :bishop
     unicode: "♗"
+    active_player: *1
+    opposing_player: *2
   - &15 !ruby/object:Knight
     color: :white
     position:
-    - 0
-    - 5
-    possible_moves: []
+    - 2
+    - 6
+    possible_moves:
+    - - 3
+      - 4
+    - - 4
+      - 5
+    - - 4
+      - 7
+    - - 0
+      - 5
     figure: :knight
     unicode: "♘"
+    active_player: *1
+    opposing_player: *2
   - &16 !ruby/object:Knight
     color: :white
     position:
     - 0
     - 2
-    possible_moves: []
+    possible_moves:
+    - - 1
+      - 0
+    - - 2
+      - 1
+    - - 2
+      - 3
     figure: :knight
     unicode: "♘"
+    active_player: *1
+    opposing_player: *2
   - &17 !ruby/object:Queen
     color: :white
     position:
@@ -663,17 +767,25 @@ plr1: &1 !ruby/object:Player
     possible_moves: []
     figure: :queen
     unicode: "♕"
+    active_player: *1
+    opposing_player: *2
   - &18 !ruby/object:King
     color: :white
     position:
     - 0
-    - 4
-    possible_moves: []
+    - 6
+    possible_moves:
+    - - 1
+      - 5
+    - - 0
+      - 5
     figure: :king
     moved: false
     unicode: "♔"
+    active_player: *1
+    opposing_player: *2
   in_check: false
-  castled: false
+  castled: true
 plr2: *2
 board: !ruby/object:Board
   value:
@@ -681,25 +793,25 @@ board: !ruby/object:Board
     - "♗"
     - "♘"
     - "♕"
-    - "♔"
-    - "♘"
-    - "♗"
+    - " "
     - "♖"
+    - "♔"
+    - " "
   - - " "
     - "♙"
     - "♙"
     - "♙"
     - "♙"
-    - "♙"
+    - " "
     - "♙"
     - "♙"
   - - " "
     - " "
     - " "
     - " "
-    - " "
-    - " "
-    - " "
+    - "♗"
+    - "♙"
+    - "♘"
     - " "
   - - "♙"
     - " "
@@ -713,10 +825,10 @@ board: !ruby/object:Board
     - " "
     - " "
     - " "
-    - " "
-    - " "
-    - " "
-    - " "
+    - "♟"
+    - "♟"
+    - "♟"
+    - "♟"
   - - " "
     - " "
     - " "
@@ -729,10 +841,10 @@ board: !ruby/object:Board
     - "♟"
     - "♟"
     - "♟"
-    - "♟"
-    - "♟"
-    - "♟"
-    - "♟"
+    - " "
+    - " "
+    - " "
+    - " "
   - - "♜"
     - "♝"
     - "♞"
@@ -777,7 +889,11 @@ all_pieces:
 - *33
 - *34
 selected_position:
-- 1
-- 0
+- 6
+- 4
 selected_destination: *35
-selected_figure: *3
+selected_figure: *23
+can_castle_queenside: false
+under_attack: false
+can_castle_kingside: true
+can_castle_both_ways: false

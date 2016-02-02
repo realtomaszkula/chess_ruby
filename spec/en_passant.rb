@@ -5,7 +5,7 @@ describe Chess do
   let(:plr1) { game.plr1 }
   let(:plr2) { game.plr2 }
 
-  describe '#mark_enemy_passant' do
+ xdescribe '#mark_enemy_passant' do
   context 'when white player moves' do
     before do
       game.instance_variable_set(:@selected_destination, [3,0])
@@ -34,7 +34,7 @@ describe Chess do
     }
   end
 
-  describe '#en_passant?' do
+  xdescribe '#en_passant?' do
     context 'when white player moves' do
       before do
         @pawn = Pawn.new(:white, [1,0])
@@ -59,7 +59,7 @@ describe Chess do
     end
   end
 
-  describe '#captured_en_passant?' do
+  xdescribe '#captured_en_passant?' do
     it 'returns false when moving non pawn figure' do
         queen = Queen.new(:white, [1,0])
         game.instance_variable_set(:@selected_figure, queen)
@@ -74,7 +74,7 @@ describe Chess do
     end
   end
 
-  describe '#capture_pawn' do
+  xdescribe '#capture_pawn' do
     before do
       plr1.pieces = []
       plr2.pieces = []
@@ -95,6 +95,25 @@ describe Chess do
       expect { game.capture_pawn }.to change{ plr1.pieces.size }.from(1).to(0)
     end
   end
+
+
+  end
+
+
+  describe '#clear_own_en_passant_marks' do
+    it '' do
+      plr1.pieces = []
+      pawn1 = Pawn.new(:white, [0,0])
+      pawn1.instance_variable_set(:@en_passant, [2,0])
+      pawn2 = Pawn.new(:white, [2,2])
+      pawn2.instance_variable_set(:@en_passant, [2,0])
+      plr1.pieces << pawn1 << pawn2
+        expect {
+          game.clear_own_en_passant_marks
+        }.to change{ plr1.pieces.first.en_passant }.from([2,0]).to([])
+         .and change{ plr1.pieces.last.en_passant }.from([2,0]).to([])
+    end
+
+  end
 end
 
-end

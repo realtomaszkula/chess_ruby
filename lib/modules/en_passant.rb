@@ -7,7 +7,8 @@ module EnPassant
   end
 
   def clear_own_en_passant_marks
-    @active_player.pieces.select { |piece| piece.figure == :pawn }.select { |pawn| !pawn.en_passant.empty? }.map! { |pawn| pawn.en_passant = [] }
+    p  @active_player.pieces.last.en_passant
+    @active_player.pieces.select { |piece| piece.figure == :pawn }.select { |pawn| !pawn.en_passant.empty? }.each { |pawn| pawn.en_passant = [] }
   end
 
   def capture_pawn
@@ -15,7 +16,6 @@ module EnPassant
     when :white then captured_pawn = @opposing_player.pieces.find { |piece| piece.position == [@selected_destination[0] - 1, @selected_destination[1]] }
     when :black then captured_pawn = @opposing_player.pieces.find { |piece| piece.position == [@selected_destination[0] + 1, @selected_destination[1]] }
     end
-    p captured_pawn
     @opposing_player.kill_piece(captured_pawn.position)
   end
 

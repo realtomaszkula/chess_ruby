@@ -24,24 +24,30 @@ module EnPassant
   end
 
   def mark_enemy_passant
+    p @selected_destination
     y1 = @selected_destination[1] + 1
     y2 = @selected_destination[1] - 1
-    x =  @selected_destination[1]
+    x =  @selected_destination[0]
 
-    pawn1 = @opposing_player.pieces.find { |piece| piece.positon == [x,y1]}
-    pawn2 = @opposing_player.pieces.find { |piece| piece.positon == [x,y2]}
 
+    pawn1 = @opposing_player.pieces.find { |piece| piece.position == [x,y1]}
+    pawn2 = @opposing_player.pieces.find { |piece| piece.position == [x,y2]}
+    p pawn1
+    p pawn2
 
     case @opposing_player.color
     when :white
-      en_passant_capture_possition = [@selected_destination[0] - 1, @selected_destination[1]]
+      en_passant_capture_possition = [@selected_destination[0] + 1, @selected_destination[1] ]
       pawn1.en_passant << en_passant_capture_possition if pawn1 != nil
       pawn2.en_passant << en_passant_capture_possition if pawn2 != nil
     when :black
-      en_passant_capture_possition = [@selected_destination[0] + 1, @selected_destination[1]]
+      en_passant_capture_possition = [@selected_destination[0] - 1, @selected_destination[1] ]
+      p en_passant_capture_possition
       pawn1.en_passant << en_passant_capture_possition if pawn1 != nil
       pawn2.en_passant << en_passant_capture_possition if pawn2 != nil
     end
+
+    p @opposing_player.pieces
 
   end
 

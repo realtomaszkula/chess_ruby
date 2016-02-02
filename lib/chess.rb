@@ -24,24 +24,21 @@ class Chess
     loop do
       implement_changes
       temp_save
-      until player_move do
-        puts "\e[H\e[2J"
+      loop do
         draw_board
-        puts "Incorrect, try again"
-        player_move
+        correct_move = player_move
+        break if correct_move
       end
       if check_if_in_check
-        load_temp
         puts "You are in check"
+        load_temp
         next
       end
-      implement_changes
       change_turn
     end
   end
 
   def implement_changes
-    puts "\e[H\e[2J"
     collect_all_pieces
     create_clear_board
     update_board
@@ -56,15 +53,15 @@ class Chess
     @selected_destination = split_and_convert(input[1])
     @selected_figure = @active_player.pieces.find { |piece| piece.position == @selected_position }
 
-    return false if @selected_figure == nil
+   return false if @selected_figure == nil
 
     @selected_figure.receive_environment(@active_player, @opposing_player)
     @selected_figure.find_possible_moves
 
-    p @selected_destination
-    p @selected_figure.find_possible_moves
-
-    return false unless @selected_figure.possible_moves.include?(@selected_destination)
+    unless @selected_figure.possible_moves.include?(@selected_destination)
+      show_moves(@selected_figure.possible_moves)
+      return false
+    end
 
     if @board.occupied_by_an_enemy?(@selected_destination, @opposing_player)
       @selected_figure.position = @selected_destination
@@ -87,7 +84,7 @@ class Chess
           input[0].ord.between?(65,72) &&
           input[3].ord.between?(65,72) &&
           input[1].to_i.between?(1,8)  &&
-          input[4].to_i.between?(1,8)) || input == 'SAVE' || input == 'CASTLE' || input == 'LOAD'
+          input[4].to_i.between?(1,8)) || input == 'SAVE' || input == 'CASTLE' || input == 'LOAD' || input == 'EXIT'
         puts "\e[H\e[2J";  draw_board
         print "\n\t\t\t\tIncorrect, try again\n\n\t\t\t\t"
         input = gets.chomp.upcase
@@ -97,6 +94,7 @@ class Chess
     when 'SAVE' then save_the_game; input_move ## need to rework this
     when 'CASTLE' then castle; input_move
     when 'LOAD' then load_the_game
+    when 'EXIT' then Kernel.exit
     else input = input.split
     end  ## ["A1" "A2"]
   end
@@ -127,6 +125,7 @@ class Chess
       @active_player = @plr1; @opposing_player = @plr2
     end
   end
+
 
   def create_players
     @plr1 = Player.new('Tomasz', :white)
@@ -173,16 +172,24 @@ class Chess
 
   def load_temp
     yaml_string = File.open("./temp/save.txt","r") {|fname| fname.read}
-    x = YAML::load(yaml_string)
+    game = YAML::load(yaml_string)
+    game.play
+  end
+
+  def show_moves(moves)
+    print "\t\t\t\t Incorrect - possible moves for this piece:\n\t\t\t\t"
+    moves.each do |position|
+      print "#{(position[1]+65).chr}#{position[0]+1} "
+    end
   end
 
   def castle
-    unless can_castle? then puts "Incorrect! Can't castle!"; return; end
+    unless can_castle? then puts "\t\t\t\tIncorrect! Can't castle!"; return; end
     if @can_castle_both_ways
-      puts 'Enter:\nKING - to castle kingside\nQUEEN - to castle queenside'
-      case input = gets.chomp
+      puts "Enter:\nKING - to castle kingside\nQUEEN - to castle queenside"
+      case input = gets.chomp.upcase
       when 'QUEEN'  then @active_player.castle(:queen)
-      when 'KNIGHT' then @active_player.castle(:king)
+      when 'KING' then @active_player.castle(:king)
       end
     elsif @can_castle_queenside then @active_player.castle(:queen)
     elsif @can_castle_kingside then @active_player.castle(:king)

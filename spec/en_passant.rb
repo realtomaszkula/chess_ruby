@@ -85,6 +85,15 @@ describe Chess do
       game.instance_variable_set(:@selected_destination, [5,0])
       expect { game.capture_pawn }.to change{ plr2.pieces.size }.from(1).to(0)
     end
+
+    it "black player captures white pawn" do
+      game.instance_variable_set(:@active_player, plr2)
+      game.instance_variable_set(:@opposing_player, plr1)
+      plr2.pieces << Pawn.new(:black, [2,0])
+      plr1.pieces << Pawn.new(:white, [3,0])
+      game.instance_variable_set(:@selected_destination, [2,0])
+      expect { game.capture_pawn }.to change{ plr1.pieces.size }.from(1).to(0)
+    end
   end
 end
 

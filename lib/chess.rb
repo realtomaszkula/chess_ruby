@@ -39,7 +39,7 @@ class Chess
     collect_all_pieces
     create_clear_board
     update_board
-    # draw_board
+    draw_board
   end
 
   def player_move

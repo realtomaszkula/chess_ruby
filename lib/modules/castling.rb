@@ -41,14 +41,13 @@ module Castling
   def queenside_under_attack
     @opposing_player.pieces.each { |piece| piece.receive_environment(@opposing_player, @active_player) }
     fields_under_attack = @opposing_player.pieces.collect { |piece| piece.find_possible_moves }.flatten(1)
-
     case @active_player.color
     when :black
-      @under_attack = fields_under_attack.any? { |i| [[7,2], [7,3]].include? i }
+      @under_attack = fields_under_attack.any? { |i| [[7,2], [7,3], [7,4]].include? i }
     when :white
-      @under_attack = fields_under_attack.any? { |i| [[0,2], [0,3]].include? i }
+      @under_attack = fields_under_attack.any? { |i| [[0,2], [0,3], [0,4]].include? i }
     end
-    p @under_attack
+
     @under_attack
   end
 
@@ -58,9 +57,9 @@ module Castling
 
     case @active_player.color
     when :black
-      @under_attack = fields_under_attack.any? { |i| [[7,5], [7,6]].include? i }
-    when :white
-      @under_attack = fields_under_attack.any? { |i| [[0,5], [0,6]].include? i }
+      @under_attack = fields_under_attack.any? { |i| [[7,5], [7,6], [7,4]].include? i }
+    when :white, [7,4]
+      @under_attack = fields_under_attack.any? { |i| [[0,5], [0,6], [0,4]].include? i }
     end
     @under_attack
   end

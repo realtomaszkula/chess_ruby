@@ -12,10 +12,11 @@ module EnPassant
 
   def capture_pawn
     case @active_player.color
-    when :white then captured_pawn = @opposing_player.pieces.find { |piece| piece.position == [@selected_destination[0] + 1, @selected_destination[1]] }
+    when :white then captured_pawn = @opposing_player.pieces.find { |piece| piece.position == [@selected_destination[0] - 1, @selected_destination[1]] }
     when :black then captured_pawn = @opposing_player.pieces.find { |piece| piece.position == [@selected_destination[0] + 1, @selected_destination[1]] }
     end
-    @opposing_player.kill_piece(captured_pawn)
+    p captured_pawn
+    @opposing_player.kill_piece(captured_pawn.position)
   end
 
   def captured_en_passant?

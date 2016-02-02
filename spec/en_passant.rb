@@ -65,7 +65,7 @@ describe Chess do
         game.instance_variable_set(:@selected_figure, queen)
         expect(game.captured_en_passant?).to eql false
     end
-    it 'returns true when movingto en_passant position' do
+    it 'returns true when moving to en_passant position' do
         pawn = Pawn.new(:white, [1,0])
         pawn.en_passant = [3,0]
         game.instance_variable_set(:@selected_figure, pawn)
@@ -74,6 +74,19 @@ describe Chess do
     end
   end
 
+  describe '#capture_pawn' do
+    before do
+      plr1.pieces = []
+      plr2.pieces = []
+      plr1.pieces << Pawn.new(:white, [5,0])
+      plr2.pieces << Pawn.new(:black, [4,0])
+      game.instance_variable_set(:@selected_destination, [5,0])
+
+    end
+    it "white player captures black pawn" do
+      expect { game.capture_pawn }.to change{ plr2.pieces.size }.from(1).to(0)
+    end
+  end
 end
 
 end

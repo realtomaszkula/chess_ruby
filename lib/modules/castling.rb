@@ -5,6 +5,7 @@ module Castling
     @can_castle_queenside = queenside_space_empty? && !queenside_rook_moved? && !queenside_under_attack
     @can_castle_kingside = kingside_space_empty? && !kingside_rook_moved? && !kingside_under_attack
     @can_castle_both_ways = @can_castle_queenside && @can_castle_kingside
+
     !check && !king_moved && (@can_castle_queenside || @can_castle_kingside)
   end
 
@@ -47,7 +48,6 @@ module Castling
     when :white
       @under_attack = fields_under_attack.any? { |i| [[0,2], [0,3], [0,4]].include? i }
     end
-
     @under_attack
   end
 

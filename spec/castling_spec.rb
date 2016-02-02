@@ -1,6 +1,6 @@
 require_relative '../lib/chess.rb'
 
-
+### fix tests
 describe Chess do
   let(:game) { Chess.new }
   let(:plr1) { game.plr1 }

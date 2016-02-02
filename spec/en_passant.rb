@@ -78,12 +78,11 @@ describe Chess do
     before do
       plr1.pieces = []
       plr2.pieces = []
+    end
+    it "white player captures black pawn" do
       plr1.pieces << Pawn.new(:white, [5,0])
       plr2.pieces << Pawn.new(:black, [4,0])
       game.instance_variable_set(:@selected_destination, [5,0])
-
-    end
-    it "white player captures black pawn" do
       expect { game.capture_pawn }.to change{ plr2.pieces.size }.from(1).to(0)
     end
   end

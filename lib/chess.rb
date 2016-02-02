@@ -24,7 +24,12 @@ class Chess
   def play
     loop do
       temp_save
-      player_move until player_move
+      until player_move do
+        puts "\e[H\e[2J"
+        draw_board
+        puts "Incorrect, try again"
+        player_move
+      end
       if check_if_in_check
         load_temp
         puts "You are in check"
@@ -36,6 +41,7 @@ class Chess
   end
 
   def implement_changes
+    puts "\e[H\e[2J"
     collect_all_pieces
     create_clear_board
     update_board
@@ -50,10 +56,7 @@ class Chess
     @selected_destination = split_and_convert(input[1])
     @selected_figure = @active_player.pieces.find { |piece| piece.position == @selected_position }
 
-    if @selected_figure == nil
-      puts "Incorrect, try again (can only select your own figures)"
-      return false
-    end
+    return false if @selected_figure == nil
 
     @selected_figure.receive_environment(@active_player, @opposing_player)
     @selected_figure.find_possible_moves
@@ -61,10 +64,7 @@ class Chess
     p @selected_destination
     p @selected_figure.find_possible_moves
 
-    unless @selected_figure.possible_moves.include?(@selected_destination)
-      puts "Incorrect, try again (movement outside of possible moves for this figure)"
-      return false
-    end
+    return false unless @selected_figure.possible_moves.include?(@selected_destination)
 
     if @board.occupied_by_an_enemy?(@selected_destination, @opposing_player)
       @selected_figure.position = @selected_destination
@@ -80,8 +80,7 @@ class Chess
 
   def input_move
     return if @active_player.castled == true
-    puts "\n\t\t\t\t:#{@active_player.color}_player, enter your move"
-    input = ""
+    print "\n\t\t\t\t:#{@active_player.color}_player, enter your move\n\n\t\t\t\t"
     input = gets.chomp.upcase
     until (input.size == 5             &&
           input[2]     == " "          &&
@@ -89,13 +88,14 @@ class Chess
           input[3].ord.between?(65,72) &&
           input[1].to_i.between?(1,8)  &&
           input[4].to_i.between?(1,8)) || input == 'SAVE' || input == 'CASTLE'
-       puts "\t\t\t\tIncorrect, try again"
-       input = gets.chomp.upcase
+        puts "\e[H\e[2J";  draw_board
+        print "\n\t\t\t\tIncorrect, try again\n\n\t\t\t\t"
+        input = gets.chomp.upcase
     end
 
     case input
-    when 'SAVE' then save_the_game; ## need to rework this
-    when 'CASTLE' then castle;
+    when 'SAVE' then save_the_game; input_move ## need to rework this
+    when 'CASTLE' then castle; input_move
     else input = input.split
     end  ## ["A1" "A2"]
   end
@@ -153,7 +153,8 @@ class Chess
     File.open("./saves/save.txt", "w") do |f|
       f.puts yaml_string
     end
-    print "\n\t\t\t*  Game saved!  *\n\t\t\t"
+    puts "\e[H\e[2J";  draw_board
+    print "\n\t\t\t\t*  Game saved!  *\n\t\t\t"
   end
 
   def load_the_game
@@ -174,7 +175,7 @@ class Chess
   end
 
   def castle
-    unless can_castle? then puts "Incorrect! Can't castle!"; input_move; end
+    unless can_castle? then puts "Incorrect! Can't castle!"; return; end
     if @can_castle_both_ways
       puts 'Enter:\nKING - to castle kingside\nQUEEN - to castle queenside'
       case input = gets.chomp

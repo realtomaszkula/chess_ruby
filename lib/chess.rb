@@ -43,7 +43,9 @@ class Chess
   end
 
   def player_move
+    @active_player.castled = false
     input = input_move()
+    return if @active_player.castled == true
     @selected_position = split_and_convert(input[0])
     @selected_destination = split_and_convert(input[1])
     @selected_figure = @active_player.pieces.find { |piece| piece.position == @selected_position }
@@ -174,9 +176,8 @@ class Chess
     elsif @can_castle_queenside then @active_player.castle(:queenside)
     elsif @can_castle_kingside then @active_player.castle(:kingside)
     end
+    @active_player.castled = true
   end
 
 end
 
- # x = Chess.new
- # x.play

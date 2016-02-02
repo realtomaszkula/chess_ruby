@@ -1,11 +1,12 @@
 class Player
   attr_reader :name, :color
-  attr_accessor :pieces, :in_check
+  attr_accessor :pieces, :in_check, :castled
   def initialize(name, color)
     @name = name
     @color = color
     @pieces = []
     @in_check = false
+    @castled = false
     get_pieces
   end
 

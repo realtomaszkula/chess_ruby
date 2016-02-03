@@ -18,6 +18,7 @@ class Chess
     create_clear_board
     @active_player = @plr1
     @opposing_player = @plr2
+    @msg = ""
   end
 
   def play
@@ -25,12 +26,11 @@ class Chess
       implement_changes
       temp_save
       loop do
-        draw_board
         correct_move = player_move
         break if correct_move
       end
       if check_if_in_check
-        puts "You are in check"
+        msg(:check)
         load_temp
         next
       end
@@ -53,13 +53,16 @@ class Chess
     @selected_destination = split_and_convert(input[1])
     @selected_figure = @active_player.pieces.find { |piece| piece.position == @selected_position }
 
-   return false if @selected_figure == nil
+    if @selected_figure == nil
+      msg(:wrong_square)
+      return false
+    end
 
     @selected_figure.receive_environment(@active_player, @opposing_player)
     @selected_figure.find_possible_moves
 
     unless @selected_figure.possible_moves.include?(@selected_destination)
-      show_moves(@selected_figure.possible_moves)
+      msg(:cant_move)
       return false
     end
 
@@ -77,7 +80,7 @@ class Chess
 
   def input_move
     return if @active_player.castled == true
-    print "\n\t\t\t\t:#{@active_player.color}_player, enter your move\n\n\t\t\t\t"
+    interface
     input = gets.chomp.upcase
     until (input.size == 5             &&
           input[2]     == " "          &&
@@ -85,25 +88,46 @@ class Chess
           input[3].ord.between?(65,72) &&
           input[1].to_i.between?(1,8)  &&
           input[4].to_i.between?(1,8)) || input == 'SAVE' || input == 'CASTLE' || input == 'LOAD' || input == 'EXIT'
-        puts "\e[H\e[2J";  draw_board
-        print "\n\t\t\t\tIncorrect, try again\n\n\t\t\t\t"
+        msg(:input)
+        interface
         input = gets.chomp.upcase
     end
 
     case input
-    when 'SAVE' then save_the_game; input_move ## need to rework this
+    when 'SAVE' then save_the_game; input_move
     when 'CASTLE' then castle; input_move
     when 'LOAD' then load_the_game
     when 'EXIT' then Kernel.exit
     else input = input.split
-    end  ## ["A1" "A2"]
+    end
+  end
+
+
+  def interface
+    print "\e[H\e[2J";
+    print "\n\n\t\t\t\tcommands: SAVE | LOAD | EXIT "
+    draw_board
+    print "\t\t\t\t#{@msg}"
+    print "\n\t\t\t\t:#{@active_player.color}_player, enter your move\n\n\t\t\t\t"
+  end
+
+  def msg(err)
+    @msg = case err
+              when :check then "You are in check!"
+              when :cant_move then "Can't move to this square! #{show_moves(@selected_figure.find_possible_moves)}"
+              when :wrong_square then "Incorrect square, select your own figure!"
+              when :input then "Incorrect, try again."
+              when :castle then "Cannot castle!"
+              when :saved then "Game saved!"
+              when :choose_castle then "\n\t\t\t\tKING - to castle kingside\n\t\t\t\tQUEEN - to castle queenside"
+              end
   end
 
   def split_and_convert(input)
     input = input.split("").reverse
     input[0] = input[0].to_i - 1
     input[1] = input[1].ord - 65
-    input #[]
+    input
   end
 
   def check_if_in_check
@@ -124,6 +148,7 @@ class Chess
     else
       @active_player = @plr1; @opposing_player = @plr2
     end
+    @msg = ""
   end
 
 
@@ -153,8 +178,7 @@ class Chess
     File.open("./saves/save.txt", "w") do |f|
       f.puts yaml_string
     end
-    puts "\e[H\e[2J";  draw_board
-    print "\n\t\t\t\t*  Game saved!  *\n\t\t\t"
+    msg(:saved)
   end
 
   def load_the_game
@@ -177,18 +201,20 @@ class Chess
   end
 
   def show_moves(moves)
-    print "\t\t\t\t Incorrect - possible moves for this piece:\n\t\t\t\t"
+    result = "\n\t\t\t\tPossible moves for #{@selected_figure.unicode}:(#{(@selected_figure.position[1]+65).chr}#{@selected_figure.position[0]+1}) ->"
     moves.each do |position|
-      print "#{(position[1]+65).chr}#{position[0]+1} "
+      result << " #{(position[1]+65).chr}#{position[0]+1}"
     end
+    result
   end
 
   def castle
-    unless can_castle? then puts "\t\t\t\tIncorrect! Can't castle!"; return; end
+    unless can_castle? then msg(:castle); return; end
     if @can_castle_both_ways
-      puts "Enter:\nKING - to castle kingside\nQUEEN - to castle queenside"
+      msg(:choose_castle)
+      interface
       case input = gets.chomp.upcase
-      when 'QUEEN'  then @active_player.castle(:queen)
+      when 'QUEEN' then @active_player.castle(:queen)
       when 'KING' then @active_player.castle(:king)
       end
     elsif @can_castle_queenside then @active_player.castle(:queen)

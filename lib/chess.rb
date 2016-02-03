@@ -4,13 +4,11 @@ require_relative './board.rb'
 require_relative './modules/movement.rb'
 require_relative './modules/castling.rb'
 require_relative './modules/en_passant.rb'
-require_relative './modules/pawn_promotion.rb'
 require 'yaml'
 
 class Chess
   include Castling
   include EnPassant
-  include PawnPromotion
 
   attr_accessor :plr1, :plr2, :board, :active_player, :opposing_player
   def initialize
@@ -87,7 +85,7 @@ class Chess
           input[0].ord.between?(65,72) &&
           input[3].ord.between?(65,72) &&
           input[1].to_i.between?(1,8)  &&
-          input[4].to_i.between?(1,8)) || input == 'SAVE' || input == 'CASTLE' || input == 'LOAD' || input == 'EXIT'
+          input[4].to_i.between?(1,8)) || input == 'SAVE' || input == 'CASTLE' || input == 'LOAD' || input == 'EXIT' || 'HELP'
         msg(:input)
         interface
         input = gets.chomp.upcase
@@ -97,18 +95,50 @@ class Chess
     when 'SAVE' then save_the_game; input_move
     when 'CASTLE' then castle; input_move
     when 'LOAD' then load_the_game
-    when 'EXIT' then Kernel.exit
+    when 'EXIT' then exit
+    when 'HELP' then help; input_move
     else input = input.split
     end
   end
 
+  def castle
+    unless can_castle? then msg(:castle); return; end
+    if @can_castle_both_ways
+      msg(:choose_castle)
+      interface
+      case input = gets.chomp.upcase
+      when 'QUEEN' then @active_player.castle(:queen)
+      when 'KING' then @active_player.castle(:king)
+      end
+    elsif @can_castle_queenside then @active_player.castle(:queen)
+    elsif @can_castle_kingside then @active_player.castle(:king)
+    end
+    @active_player.castled = true
+  end
+
+  def promote
+    msg(:promote)
+    interface
+    case input = gets.chomp
+    when 'QUEEN'  then @active_player.promote_to(:queen)
+    when 'KNIGHT' then @active_player.promote_to(:knight)
+    when 'ROOK'   then @active_player.promote_to(:rook)
+    when 'BISHOP' then @active_player.promote_to(:bishop)
+    else promote
+    end
+  end
+
+  def pawn_promotion
+      @active_player.pieces.select { |piece| piece.figure == :pawn }.any? { |pawn| pawn.promote == true }
+  end
 
   def interface
     print "\e[H\e[2J";
-    print "\n\n\t\t\t\tcommands: SAVE | LOAD | EXIT "
+    print "\n\n\t\t\tHELP | SAVE | LOAD | EXIT "
+    print "\n\t\t\tactive player: #{active_player.color}"
     draw_board
-    print "\t\t\t\t#{@msg}"
-    print "\n\t\t\t\t:#{@active_player.color}_player, enter your move\n\n\t\t\t\t"
+    print "\n\t\t\t#{@msg}"
+    print "\n\t\t\t"
   end
 
   def msg(err)
@@ -119,8 +149,19 @@ class Chess
               when :input then "Incorrect, try again."
               when :castle then "Cannot castle!"
               when :saved then "Game saved!"
-              when :choose_castle then "\n\t\t\t\tKING - to castle kingside\n\t\t\t\tQUEEN - to castle queenside"
+              when :choose_castle then "\n\t\t\tKING - to castle kingside\n\t\t\t\tQUEEN - to castle queenside"
+              when :promote then "Promote your pawn: \n\t\t\tROOK | QUEEN | BISHOP | KNIGHT"
+              when :help then "To move from one square to another type 'A2 A4'\n\t\t\tTo castle type 'CASTLE'\n\t\t\tType 'q' to go back to playing"
               end
+  end
+
+  def help
+    msg(:help)
+    interface
+    loop do
+      break if gets.chomp.downcase == 'q'
+    end
+    @msg = ''
   end
 
   def split_and_convert(input)
@@ -150,7 +191,6 @@ class Chess
     end
     @msg = ""
   end
-
 
   def create_players
     @plr1 = Player.new('Tomasz', :white)
@@ -208,19 +248,8 @@ class Chess
     result
   end
 
-  def castle
-    unless can_castle? then msg(:castle); return; end
-    if @can_castle_both_ways
-      msg(:choose_castle)
-      interface
-      case input = gets.chomp.upcase
-      when 'QUEEN' then @active_player.castle(:queen)
-      when 'KING' then @active_player.castle(:king)
-      end
-    elsif @can_castle_queenside then @active_player.castle(:queen)
-    elsif @can_castle_kingside then @active_player.castle(:king)
-    end
-    @active_player.castled = true
+  def exit
+    print "\e[H\e[2J"; Kernel.exit
   end
 
 end

@@ -16,12 +16,12 @@ class Board
   def draw
     puts "\n\n"
     @value.reverse.each_with_index do |row, i|
-      print "\t\t\t\t #{(i-8).abs}"
+      print "\t\t\t #{(i-8).abs}"
       row.each { |x| print "|#{x}" }
       print "|\n"
     end
     letters = ('A'..'H').to_a.join(" ")
-    print "\t\t\t\t   #{letters}\n"
+    print "\t\t\t   #{letters}\n"
   end
 
   def update(all_pieces)
